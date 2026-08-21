@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'user',
 ]
 
 MIDDLEWARE = [
@@ -72,10 +73,18 @@ WSGI_APPLICATION = 'myweb.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-DATABASES = {
+DATABASES = DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.sqlite3',
+    #     'NAME': BASE_DIR / 'db.sqlite3',
+    # }
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',  # 数据库引擎，ORM的底层对接pymysql的核心引擎类
+        'NAME': 'cncsite',  # 数据库名
+        'USER': 'root',  # 数据库登录账号
+        'PASSWORD': 'xiaopan123',  # 数据库密码（生产环境建议用环境变量保存，不硬编码）
+        'HOST': 'localhost',  # 数据库IP地址
+        'PORT': '3306',  # 数据库端口
     }
 }
 
@@ -115,6 +124,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+AUTH_USER_MODEL = 'user.Reguser'  # 格式为 应用名.模型名（blog.Reguser），必须放在第一次迁移之前
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
