@@ -1,0 +1,118 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forest Machining </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">For-Maches</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+            </li>
+          </ul>
+          </div>
+      </div>
+    </nav>
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h3>Registration&nbsp<small>&nbspWelcome to Forest Machining</small></h3>
+          </div>
+          <form novalidate action="{% url 'user:register' %}" method="post">
+          {% csrf_token %}
+          <div class="row mb-3">
+            <label for="{{ form_obj.email.id_for_label }}" class="col-sm-3 control-label text-end">
+              {{ form_obj.email.label }}
+            </label>
+              <div class="col-sm-6">
+                {{ form_obj.email }}
+                <div id="emailHelp" class="form-text justify-content-center">We'll never share your information with anyone else.</div>
+                <span class="help-block">{{ form_obj.email.errors.0 }}</span>
+              </div>
+          </div>
+          <div class="row mb-3">
+            <label for="{{ form_obj.password.id_for_label }}" class="col-sm-3 control-label text-end">
+              {{ form_obj.password.label }}
+            </label>
+              <div class="col-sm-6">
+                {{ form_obj.password }}
+                <span class="help-block">{{ form_obj.password.errors.0 }}</span>
+              </div>
+          </div>
+          <div class="row mb-3">
+            <label for="{{ form_obj.repassword.id_for_label }}" class="col-sm-3 control-label text-end">
+              {{ form_obj.repassword.label }}
+            </label>
+              <div class="col-sm-6">
+                {{ form_obj.repassword }}
+                <span class="help-block">{{ form_obj.repassword.errors.0 }}</span>
+              </div>
+          </div>
+          <div class="row mb-3">
+            <label for="{{ form_obj.first_name.id_for_label }}" class="col-sm-3 control-label text-end">
+              {{ form_obj.first_name.label }}
+            </label>
+              <div class="col-sm-6">
+                {{ form_obj.first_name }}
+                <span class="help-block">{{ form_obj.first_name.errors.0 }}</span>
+              </div>
+          </div>
+          <div class="row mb-3">
+            <label for="{{ form_obj.last_name.id_for_label }}" class="col-sm-3 control-label text-end">
+              {{ form_obj.last_name.label }}
+            </label>
+              <div class="col-sm-6">
+                {{ form_obj.last_name }}
+                <span class="help-block">{{ form_obj.last_name.errors.0 }}</span>
+              </div>
+          </div>
+          <div class="row mb-3">
+            <label for="{{ form_obj.mobile.id_for_label }}" class="col-sm-3 control-label text-end">
+              {{ form_obj.mobile.label }}
+            </label>
+              <div class="col-sm-6">
+                {{ form_obj.mobile }}
+                <span class="help-block">{{ form_obj.mobile.errors.0 }}</span>
+              </div>
+          </div>
+          <div class="row mb-3">
+            <label for="{{ form_obj.country.id_for_label }}" class="col-sm-3 control-label text-end">
+              {{ form_obj.country.label }}
+            </label>
+              <div class="col-sm-6">
+                {{ form_obj.country }}
+                <span class="help-block">{{ form_obj.country.errors.0 }}</span>
+              </div>
+          </div>
+          <div class="row mb-3"> 
+            <div class="col-sm-10 offset-sm-2">
+              <button type="submit" class="btn btn-primary">Submit</button>
+              <a href="/login/" class="btn btn-link" style="padding:8px 15px;">Already have an account? Login</a>
+            </div>
+          </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar fixed-bottom bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-center" style="font-size:1.2em;padding-top:15px;">
+            <span class="navbar-brand mb-0 h1">Forest Machining&nbsp;&copy;&nbsp;2026&nbsp;All Rights Reserved</span>
+        </div>
+    </nav>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>

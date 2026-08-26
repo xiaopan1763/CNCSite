@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_countries',
     'user',
 ]
 
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'myweb.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,9 +113,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.2/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'zh-hans'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Shanghai'
 
 USE_I18N = True
 
@@ -123,9 +125,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = '/static/'
 
-AUTH_USER_MODEL = 'user.Reguser'  # 格式为 应用名.模型名（blog.Reguser），必须放在第一次迁移之前
+AUTH_USER_MODEL = 'user.Reguser'  # 格式为 应用名.模型名（user.Reguser），必须放在第一次迁移之前
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # MEDIA_ROOT：文件在服务器磁盘上的实际存储路径
+
+MEDIA_URL = '/media/'  # MEDIA_URL：浏览器访问这些文件的URL前缀，比如 /media/avatar.jpg
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field

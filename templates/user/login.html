@@ -1,0 +1,67 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Forest Machining </title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}" >
+  </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">For-Maches</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" href="#">About Us</a>
+            </li>
+          </ul>
+          </div>
+      </div>
+    </nav>
+    <div class="container"> 
+      <div class="row">
+        <div class="col-md-6 offset-md-3">
+          <div class="page-header">
+            <h3>Login&nbsp<small>&nbspWelcome to join us</small></h3>
+          </div>
+          <form novalidate action="{% url 'user:login' %}" method="post">
+          {% csrf_token %}
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">Email address</label>
+              <input type="email" class="form-control" id="exampleInputEmail1" name="email" aria-describedby="emailHelp" placeholder="name@example.com">
+              <div id="emailHelp" class="form-text">Please enter your email.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">Password</label>
+              <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+              <div id="emailHelp" class="form-text">Please enter your password.</div>
+            </div>
+            <div class="mb-3 form-check">
+                {% if error %}
+                <div class="alert alert-danger">{{ error }}</div>
+                {% endif %}
+              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+              <a href="/register/" class="btn btn-link" style="padding:8px 15px;">Registration</a>
+              <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <nav class="navbar fixed-bottom bg-body-tertiary">
+        <div class="container-fluid d-flex justify-content-center" style="font-size:1.2em;padding-top:15px;">
+            <span class="navbar-brand mb-0 h1">Forest Machining&nbsp;&copy;&nbsp;2026&nbsp;All Rights Reserved</span>
+        </div>
+    </nav>
+    <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+  </body>
+</html>
