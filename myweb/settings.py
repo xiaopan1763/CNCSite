@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_countries',
     'user',
+    'capability',
+    'django_ckeditor_5',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +139,36 @@ MEDIA_URL = '/media/'  # MEDIA_URL：浏览器访问这些文件的URL前缀，�
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+"""CKEditor5 配置项"""
+# 控制上传权限: "staff", "authenticated", "any"
+CKEDITOR_5_FILE_UPLOAD_PERMISSION = "staff" 
+# 允许上传所有文件类型 (默认为 False, 仅允许图片)
+CKEDITOR_5_ALLOW_ALL_FILE_TYPES = False 
+# 限制上传文件大小 (单位: MB)
+CKEDITOR_5_MAX_FILE_SIZE = 5 
+# 限制上传文件的扩展名
+CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif', 'webp'] 
+# CKEditor5 工具栏定制
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'],
+        'height': 300,
+        'language': 'zh-cn'
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'imageUpload', 'table', 'mediaEmbed'
+        ],
+        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough', 'codeBlock', 'subscript', 'superscript', 'highlight', '|', 'bulletedList', 'numberedList', 'todoList', '|', 'blockQuote', 'insertImage', 'insertTable', 'mediaEmbed', 'undo', 'redo'],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight'],
+            'styles': ['full', 'alignLeft', 'alignCenter', 'alignRight']
+        },
+        
+    }
+}

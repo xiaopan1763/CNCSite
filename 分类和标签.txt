@@ -1,0 +1,65 @@
+Manufacturing Services
+	CNC Machining
+	CNC Turning
+	CNC Milling
+	CNC Drilling
+	5 Axis CNC Machining
+	Precision Machining
+	Large Part CNC Machining
+	Swiss CNC Machining
+
+Fabrication
+	Laser Cutting
+	Plasma Cutting
+	Waterjet Cutting
+	Tube Laser Cutting
+	Metal Bending
+	Welding
+	Chemical Etching
+	Metal Stamping
+	Wire EDM
+
+3D Printing
+	Stereolithography（SLA)
+	Selective Laser Sintering （SLS)
+	HP Multi Jet Fusion (MJF)
+	Fused Deposition Modeling (FDM)
+	Selective Laser Melting (SLM)
+	Digital Light Processing (DLP)
+	Digital Light Processing (FGF)
+
+Molding
+	Injection Molding
+	Injection Mold Tooling
+	Overmolding
+	Insert Molding
+	Low Volume Injection Molding
+	Vacuum Forming
+
+Die Casting
+	Die Casting
+	Vacuum Casting
+	Aluminum Extrusion
+
+PCB Manufacturing
+	Rigid Flex PCB
+	Flexible PCB
+	Metal Core PCB
+	Ceramic PCB
+	RF Microwave PCB
+	FR4 PCB
+
+Other Services
+
+
+Aerospace
+Electronics and Semiconductor
+Robotics & Automation
+Machine Building
+New Energy
+Medical
+Automotive
+Consumer Goods
+Education
+Engineering
+Communication

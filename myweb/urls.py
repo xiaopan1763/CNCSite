@@ -16,8 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin  # Django自带的后台管理系统
 from django.urls import path, include  # path定义路由，include用于包含其他urls模块
+from django.conf import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),  # 后台管理路由，访问/admin/会进入Django自带的管理后台
-    path('', include('user.urls'))  # 把user应用的urls.py文件包含进来，这样才能访问 /register/、/login/ 等路径
-]
+    path('', include('user.urls')),  # 把user应用的urls.py文件包含进来，这样才能访问 /register/、/login/ 等路径
+    path('capabilities/', include('capability.urls')),  # 把capability应用的urls.py文件包含进来，这样才能访问 /capability/ 下的路径
+    path('ckeditor/', include('django_ckeditor_5.urls')),  # 挂载CKEditor5相关URL
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)  # 配置媒体文件的访问路径
