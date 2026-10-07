@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'user',
     'capability',
     'django_ckeditor_5',
+    'home',
+    'django.contrib.sitemaps',
 ]
 
 MIDDLEWARE = [
@@ -127,7 +129,17 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
+# 静态文件 URL 前缀
 STATIC_URL = '/static/'
+
+# 开发阶段静态文件来源目录，添加项目根目录的 static 文件夹作为额外的静态文件源
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static'),   # 指向根目录的 static 文件夹
+]
+
+# 生产环境静态文件收集目录（开发阶段不生效，部署前运行 collectstatic）
+STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')  # 收集时用，开发阶段可暂时不管
+
 
 AUTH_USER_MODEL = 'user.Reguser'  # 格式为 应用名.模型名（user.Reguser），必须放在第一次迁移之前
 
@@ -152,23 +164,39 @@ CKEDITOR_5_UPLOAD_FILE_TYPES = ['jpg', 'jpeg', 'png', 'gif', 'webp']
 # CKEditor5 工具栏定制
 CKEDITOR_5_CONFIGS = {
     'default': {
-        'toolbar': ['heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote', 'undo', 'redo'],
+        'toolbar': [
+            'heading', '|',
+            'bold', 'italic', 'underline', 'strikethrough', '|',
+            'link', 'bulletedList', 'numberedList', 'blockQuote', '|',
+            'imageUpload', 'insertTable', '|',
+            'undo', 'redo', '|',
+            'sourceEditing',   # ← 新增：源码编辑按钮
+        ],
         'height': 300,
-        'language': 'zh-cn'
+        'language': 'zh-cn',
     },
     'extends': {
         'blockToolbar': [
-            'paragraph', 'heading1', 'heading2', 'heading3',
-            '|',
-            'bulletedList', 'numberedList',
-            '|',
-            'imageUpload', 'table', 'mediaEmbed'
+            'paragraph', 'heading1', 'heading2', 'heading3', '|',
+            'bulletedList', 'numberedList', '|',
+            'imageUpload', 'insertTable', 'mediaEmbed',
         ],
-        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough', 'codeBlock', 'subscript', 'superscript', 'highlight', '|', 'bulletedList', 'numberedList', 'todoList', '|', 'blockQuote', 'insertImage', 'insertTable', 'mediaEmbed', 'undo', 'redo'],
+        'toolbar': [
+            'heading', '|',
+            'outdent', 'indent', '|',
+            'bold', 'italic', 'underline', 'strikethrough', 'code', 'subscript', 'superscript', 'highlight', '|',
+            'link', 'bulletedList', 'numberedList', 'todoList', '|',
+            'blockQuote', 'insertImage', 'insertTable', 'mediaEmbed', 'codeBlock', '|',
+            'undo', 'redo', '|',
+            'sourceEditing',   # ← 新增：源码编辑按钮
+        ],
         'image': {
-            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight'],
-            'styles': ['full', 'alignLeft', 'alignCenter', 'alignRight']
+            'toolbar': [
+                'imageTextAlternative', '|',
+                'imageStyle:alignLeft', 'imageStyle:alignCenter', 'imageStyle:alignRight',
+            ],
+            'styles': ['full', 'alignLeft', 'alignCenter', 'alignRight'],
         },
-        
-    }
+        'language': 'zh-cn',
+    },
 }

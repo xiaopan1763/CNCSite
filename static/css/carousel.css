@@ -1,0 +1,688 @@
+/* GLOBAL STYLES
+-------------------------------------------------- */
+/* Padding below the footer and lighter body text */
+
+body {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+  color: #5a5a5a;
+}
+
+
+/* CUSTOMIZE THE CAROUSEL
+-------------------------------------------------- */
+
+/* Carousel base class */
+.carousel {
+  margin-bottom: 4rem;
+}
+/* Since positioning the image, we need to help out the caption */
+.carousel-caption {
+  bottom: 3rem;
+  z-index: 10;
+}
+
+/* Declare heights because of positioning of img element */
+.carousel-item {
+  height: 32rem;
+}
+
+
+/* MARKETING CONTENT
+-------------------------------------------------- */
+
+/* Center align the text within the three columns below the carousel */
+.marketing .col-lg-4 {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+/* rtl:begin:ignore */
+.marketing .col-lg-4 p {
+  margin-right: .75rem;
+  margin-left: .75rem;
+}
+/* rtl:end:ignore */
+
+
+/* Featurettes
+------------------------- */
+
+.featurette-divider {
+  margin: 5rem 0; /* Space out the Bootstrap <hr> more */
+}
+
+/* Thin out the marketing headings */
+/* rtl:begin:remove */
+.featurette-heading {
+  letter-spacing: -.05rem;
+}
+
+/* rtl:end:remove */
+
+/* RESPONSIVE CSS
+-------------------------------------------------- */
+
+@media (min-width: 40em) {
+  /* Bump up size of carousel content */
+  .carousel-caption p {
+    margin-bottom: 1.25rem;
+    font-size: 1.25rem;
+    line-height: 1.4;
+  }
+
+  .featurette-heading {
+    font-size: 50px;
+  }
+}
+
+@media (min-width: 62em) {
+  .featurette-heading {
+    margin-top: 7rem;
+  }
+}
+
+/* ===== 首页轮播图自定义样式 ===== */
+
+/* 轮播图统一高度 */
+.carousel-item img {
+  height: 650px;
+  object-fit: cover;
+}
+
+/* 文字遮罩层，提升可读性 */
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+.carousel-caption {
+  z-index: 2;
+}
+
+/* 标题和描述 */
+.carousel-caption h1 {
+  font-size: 3rem;
+  font-weight: 700;
+}
+.carousel-caption .lead {
+  font-size: 1.15rem;
+}
+
+/* 响应式：小屏幕适配 */
+@media (max-width: 768px) {
+  .carousel-item img {
+    height: 500px;
+  }
+  .carousel-caption h1 {
+    font-size: 2rem;
+  }
+  .carousel-caption .lead {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .navbar-collapse .navbar-nav {
+    justify-content: center;
+  }
+}
+
+/* 导航链接间距 */
+.navbar-nav .nav-item {
+  margin: 0 0.75rem;   /* 左右各 12px */
+}
+
+/* 小屏幕时恢复紧凑 */
+@media (max-width: 767.98px) {
+  .navbar-nav .nav-item {
+    margin: 0;
+  }
+}
+
+/* 修复轮播箭头按钮无法点击 */
+.carousel-control-prev,
+.carousel-control-next {
+  z-index: 1050 !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+}
+
+/* 让内部的图标 span 也不拦截点击 */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  pointer-events: none !important;
+}
+
+
+/* ===== 行业板块样式 ===== */
+
+/* 每个行业项：保证图标与文字顶部对齐（避免换行时错位） */
+.industry-item {
+  align-items: center;        /* 单行时居中 */
+  min-height: 60px;           /* 统一最小高度，让布局整齐 */
+  padding: 0.5rem 0;
+}
+
+/* 图标：加大尺寸，颜色与标题一致 */
+.industry-icon {
+  font-size: 3.5rem;          /* 加大图标（原来 2.2rem 太小） */
+  color: #1A2F4C;
+  flex-shrink: 0;             /* 防止被压缩 */
+  line-height: 1;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+/* 悬停时图标变绿 */
+.industry-item:hover .industry-icon {
+  color: #2E5C4E;
+  transform: scale(1.1);
+}
+
+/* 行业名称：用 div 替代 h3，字号更可控 */
+.industry-title {
+  font-size: 1.1rem;          /* 比 h3 小，视觉更协调 */
+  font-weight: 500;
+  color: #1A2F4C;
+  line-height: 1.4;
+  margin: 0;                  /* 移除默认 margin */
+}
+
+/* 长文字换行时，图标和文字仍然顶部对齐（可选：改用 flex-start） */
+@media (max-width: 991.98px) {
+  .industry-item {
+    align-items: flex-start;
+  }
+  .industry-item .industry-icon {
+    margin-top: 0.15rem;      /* 微调图标位置，视觉对齐第一行文字 */
+  }
+}
+
+/* ===== 工艺卡片增强悬停效果 ===== */
+.service-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    border: 1px solid transparent;   /* 预留边框位置，悬停时变色 */
+    border-radius: 12px;
+    overflow: hidden;
+    background: #fff;
+}
+
+.service-card:hover {
+    transform: translateY(-10px) scale(1.02);   /* 上浮 + 微放大 */
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+    border-color: #2E5C4E;                     /* 悬停时边框变森林绿 */
+}
+
+/* 图片缩放 */
+.service-card .card-img-top {
+    transition: transform 0.4s ease;
+}
+.service-card:hover .card-img-top {
+    transform: scale(1.1);
+}
+
+/* 标题变色 */
+.service-card .card-title {
+    transition: color 0.3s ease;
+}
+.service-card:hover .card-title {
+    color: #2E5C4E;
+}
+
+/* 可选：卡片内文字上浮 */
+.service-card .card-body {
+    transition: transform 0.3s ease;
+}
+.service-card:hover .card-body {
+    transform: translateY(-4px);
+}
+
+/* ===== How to Order Section ===== */
+.step-card {
+    border: 1px solid #e9ecef; /* 浅灰色边框 */
+    border-radius: 12px;
+    background-color: #ffffff;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.step-card:hover {
+    transform: translateY(-5px); /* 悬停时轻微上浮 */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+}
+
+.step-icon {
+    font-size: 3rem; /* 图标大小 */
+    color: #2E5C4E; /* 森林绿，匹配品牌色 */
+    line-height: 1;
+}
+
+.step-title {
+    color: #1A2F4C; /* 深色标题 */
+    margin-bottom: 0.5rem;
+}
+
+.step-desc {
+    color: #6c757d; /* 灰色描述文字 */
+    line-height: 1.6;
+    font-size: 0.9rem;
+}
+
+/* ==================== 客户评价板块 ==================== */
+.review-card {
+  background: #fff;
+  border: 1px solid #e9ecef;
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.review-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+}
+
+.review-stars {
+  color: #00b67a; /* Trustpilot 绿色 */
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+
+.review-author {
+  color: #6c757d;
+}
+
+.review-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #1A2F4C;
+  margin-bottom: 0.5rem;
+}
+
+.review-text {
+  font-size: 0.85rem;
+  color: #6c757d;
+  line-height: 1.5;
+  margin-bottom: 0;
+}
+
+/* ==================== 数据统计 ==================== */
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d9534f; /* 红色强调 */
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+/* ==================== 全球供应能力（地图背景 + 文字叠加） ==================== */
+.global-section {
+  position: relative;
+  padding: 5rem 0;
+  overflow: hidden;
+}
+
+/* 地图背景层：铺满整个区域，作为装饰 */
+.global-map-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url('/static/image/world-map-grey.jpg');  /* ← 替换为你的图片路径 */
+  background-size: cover;         /* 铺满整个区域 */
+  background-position: center;    /* 居中显示 */
+  background-repeat: no-repeat;
+  opacity: 0.15;                  /* 降低透明度，避免干扰文字阅读 */
+  z-index: 0;
+}
+
+/* 文字内容层：位于地图上方 */
+.global-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* 数据统计样式 */
+.stat-item {
+  text-align: center;
+}
+
+.stat-number {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #d9534f;
+  line-height: 1.2;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 991.98px) {
+  .global-section {
+    padding: 3rem 0;
+  }
+  .stat-number {
+    font-size: 1.8rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .stat-number {
+    font-size: 1.5rem;
+  }
+  .stat-label {
+    font-size: 0.8rem;
+  }
+}
+
+/* ==================== Ready to Order CTA Section ==================== */
+.cta-section {
+  padding: 5rem 0;
+  overflow: hidden;
+}
+
+/* 背景层：图片 + 白色遮罩 */
+.cta-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(
+    rgba(255, 255, 255, 0.75),
+    rgba(255, 255, 255, 0.75)
+  ), url('/static/image/cta-cad-background.jpg');  /* ← 替换为你的图片路径 */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+}
+
+.cta-section .container {
+  position: relative;
+  z-index: 1;
+}
+
+/* 标题 */
+.cta-title {
+  font-size: 2.2rem;
+  color: #1A2F4C;
+}
+
+/* 统计数据 */
+.stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+.stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1A2F4C;
+  line-height: 1.2;
+}
+
+/* CTA 按钮 */
+.cta-btn {
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 8px;
+  background-color: #2E5C4E;   /* 森林绿，匹配品牌色 */
+  border-color: #2E5C4E;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+
+.cta-btn:hover {
+  background-color: #1f4238;
+  border-color: #1f4238;
+  transform: translateY(-2px);
+}
+
+/* 按钮下方说明 */
+.cta-note {
+  font-size: 0.85rem;
+  color: #6c757d;
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 767.98px) {
+  .cta-section {
+    padding: 3rem 0;
+  }
+  .cta-title {
+    font-size: 1.6rem;
+  }
+  .stat-number {
+    font-size: 1.5rem;
+  }
+  .cta-btn {
+    font-size: 1rem;
+    padding: 0.6rem 1.5rem;
+  }
+}
+
+/* ==================== 页脚 ==================== */
+.site-footer {
+  background-color: #1A2F4C;   /* 深蓝灰，与页脚风格统一 */
+  color: #c8d0d9;              /* 浅灰文字，保证可读性 */
+  font-size: 1rem;
+}
+
+/* 列标题 */
+.footer-heading {
+  color: #ffffff;
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1.25rem;
+}
+
+/* 链接列表 */
+.footer-links li {
+  margin-bottom: 0.6rem;
+}
+
+.footer-links a {
+  color: #a8b4c0;
+  text-decoration: none;
+  font-size: 0.95rem;           /* 显式声明字号 */
+  line-height: 1.8;             /* 增加行高 */
+  transition: color 0.2s ease;
+}
+
+.footer-links a:hover {
+  color: #ffffff;
+}
+
+/* 地址文字 */
+.footer-address {
+  color: #a8b4c0;
+  line-height: 1.7;
+  font-size: 0.95rem;
+}
+
+/* 社交媒体 */
+.footer-social-label {
+  color: #ffffff;
+  font-weight: 600;
+  margin-right: 0.75rem;
+  font-size: 1rem;
+}
+
+.footer-social-link {
+  color: #a8b4c0;
+  font-size: 1.5rem;
+  margin-right: 0.75rem;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.footer-social-link:hover {
+  color: #ffffff;
+}
+
+/* 分隔线 */
+.footer-divider {
+  border-color: rgba(255, 255, 255, 0.15);
+  margin: 0;
+}
+
+/* 品牌区 */
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.footer-brand-name {
+  color: #ffffff;
+  font-weight: 600;
+  margin-left: 0.5rem;
+  font-size: 1rem;
+}
+
+.footer-copyright {
+  color: #a8b4c0;
+  font-size: 0.95rem;
+}
+
+/* ==================== 响应式 ==================== */
+@media (max-width: 767.98px) {
+  .site-footer {
+    text-align: center;
+  }
+
+  .footer-social {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+  }
+
+  .footer-brand {
+    justify-content: center;
+    margin-bottom: 0.75rem;
+  }
+}
+
+@media (min-width: 1200px) {
+  .site-footer .row.g-4 {
+    --bs-gutter-x: 2rem;        /* 列间距加大到 2rem */
+  }
+}
+/* Fact Table */
+.fact-table {
+  border: 1px solid #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+.fact-table thead {
+  background: #1A2F4C;
+  color: #fff;
+}
+.fact-table thead th {
+  padding: 1rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.95rem;
+  border: none;
+}
+.fact-table tbody td {
+  padding: 1rem 1.5rem;
+  border-color: #f1f3f5;
+  font-size: 0.95rem;
+}
+.fact-table tbody td:first-child {
+  width: 35%;
+  color: #1A2F4C;
+}
+.fact-table tbody td:last-child {
+  color: #6c757d;
+}
+.fact-table tbody tr:hover {
+  background: #f8f9fa;
+}
+
+/* FAQ Accordion */
+.faq-accordion .accordion-item {
+  border: 1px solid #e9ecef;
+  border-radius: 12px !important;
+  margin-bottom: 12px;
+  overflow: hidden;
+  background: #fff;
+}
+.faq-accordion .accordion-button {
+  font-weight: 600;
+  font-size: 1.05rem;
+  color: #1A2F4C;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  box-shadow: none;
+  border: none;
+}
+.faq-accordion .accordion-button:not(.collapsed) {
+  background: #fff;
+  color: #2E5C4E;
+  box-shadow: none;
+}
+.faq-accordion .accordion-button:focus {
+  box-shadow: none;
+  border-color: transparent;
+}
+.faq-accordion .accordion-button::after {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232E5C4E' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+}
+.faq-accordion .accordion-body {
+  color: #6c757d;
+  font-size: 0.95rem;
+  line-height: 1.7;
+  padding: 0 1.5rem 1.5rem;
+}
+
+/* 全球供应能力的统计（深色文字，浅色背景） */
+.global-section .stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1A2F4C;
+  line-height: 1.2;
+}
+.global-section .stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-top: 0.25rem;
+}
+
+/* Ready to Order CTA 的统计（红色强调） */
+.cta-section .stat-number {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #d9534f;
+  line-height: 1.2;
+}
+.cta-section .stat-label {
+  font-size: 0.9rem;
+  color: #6c757d;
+  margin-bottom: 0.25rem;
+}
+
+@media (max-width: 576px) {
+  .global-section .stat-number,
+  .cta-section .stat-number {
+    font-size: 1.5rem;
+  }
+  .global-section .stat-label,
+  .cta-section .stat-label {
+    font-size: 0.8rem;
+  }
+}

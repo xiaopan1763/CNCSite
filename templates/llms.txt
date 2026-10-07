@@ -1,0 +1,13 @@
+# Forest Machining — guanhaoauto.com
+
+> Forest Machining is a precision CNC machining company based in Dongguan, China. We provide CNC turning, CNC milling, 5-axis machining, and rapid prototyping services for prototypes and production parts, serving aerospace, automotive, and medical industries.
+
+## Core Pages
+
+- [Home](https://guanhaoauto.com/): Overview of our manufacturing capabilities and services.
+- [Capabilities](https://guanhaoauto.com/capabilities/): Detailed list of our machining processes.
+- [Contact](https://guanhaoauto.com/contact/): Request a quote or ask about your project.
+
+## Optional
+
+- [Blog](https://guanhaoauto.com/blog/): Technical articles and industry news.
