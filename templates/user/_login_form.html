@@ -1,0 +1,28 @@
+<form novalidate action="{% url 'user:login' %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.path }}">
+
+  <div class="mb-3">
+    <label for="modalLoginEmail" class="form-label">Email address</label>
+    <input type="email" class="form-control" id="modalLoginEmail" name="email"
+           placeholder="name@example.com" required>
+    <div class="form-text">Please enter your email.</div>
+  </div>
+
+  <div class="mb-3">
+    <label for="modalLoginPassword" class="form-label">Password</label>
+    <input type="password" class="form-control" id="modalLoginPassword"
+           name="password" placeholder="Password" required>
+    <div class="form-text">Please enter your password.</div>
+  </div>
+
+  {% if login_error %}
+  <div class="alert alert-danger">{{ login_error }}</div>
+  {% endif %}
+
+  <div class="d-flex justify-content-between align-items-center">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#registerModal"
+       data-bs-dismiss="modal" class="btn btn-link px-0">Register</a>
+    <button type="submit" class="btn btn-primary">Login</button>
+  </div>
+</form>

@@ -4,6 +4,7 @@ from .models import Banner, FactSpec, FAQ, StatItem, OrderStep, Testimonial
 from capability.models import Category, Capability, Industry
 from django.db.models import Avg, Count
 from django.core.cache import cache
+from user import forms
 
 class IndexView(TemplateView):
     template_name = 'home/index.html'
@@ -69,5 +70,19 @@ class IndexView(TemplateView):
             ],
         }
         context['faq_schema_json'] = json.dumps(faq_schema, ensure_ascii=False)
-        
+        # 从 session 读取模态框和错误
+        context['open_modal'] = self.request.session.pop('open_modal', None)
+        # 不再重建 form_obj，让注册模态框使用 context_processors 提供的空表单
+        context['login_error'] = self.request.session.pop('login_error', None)
+        # 注册错误（从 session 取，并转换成纯字符串列表）
+        register_errors_json = self.request.session.pop('register_errors', None)
+        if register_errors_json:
+            raw = json.loads(register_errors_json)
+            context['register_errors'] = {
+                field: [item['message'] for item in items]
+                for field, items in raw.items()
+            }
+        else:
+            context['register_errors'] = {}
+
         return context

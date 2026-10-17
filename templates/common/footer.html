@@ -1,13 +1,85 @@
 {% load static %}
-<footer class="site-footer fixed-bottom">
-  <div class="container">
+<footer class="site-footer">
+  <div class="container-fluid px-4 px-lg-5">
+    <!-- 顶部链接列 -->
+    <div class="row g-4 py-5">
+
+      <!-- Capacities -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <h6 class="footer-heading">Capacities</h6>
+        <ul class="footer-links list-unstyled">
+          <li><a href="#">CNC Machining</a></li>
+          <li><a href="#">Sheet Metal Fabrication</a></li>
+          <li><a href="#">3D Printing</a></li>
+          <li><a href="#">Injection Molding</a></li>
+          <li><a href="#">Die Casting</a></li>
+          <li><a href="#">Wire EDM</a></li>
+        </ul>
+      </div>
+
+      <!-- Industries（新增列） -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <h6 class="footer-heading">Industries</h6>
+        <ul class="footer-links list-unstyled">
+          <li><a href="#">Aerospace</a></li>
+          <li><a href="#">Electronics &amp; Semiconductor</a></li>
+          <li><a href="#">Robotics &amp; Automation</a></li>
+          <li><a href="#">Machine Building</a></li>
+          <li><a href="#">Medical</a></li>
+          <li><a href="#">Automotive</a></li>
+        </ul>
+      </div>
+
+      <!-- Resources -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <h6 class="footer-heading">Resources</h6>
+        <ul class="footer-links list-unstyled">
+          <li><a href="#">How to Get a Quote</a></li>
+          <li><a href="#">Case Studies</a></li>
+          <li><a href="#">Design Guidelines</a></li>
+          <li><a href="#">Blog</a></li>
+        </ul>
+      </div>
+
+      <!-- About -->
+      <div class="col-6 col-md-4 col-lg-2">
+        <h6 class="footer-heading">About</h6>
+        <ul class="footer-links list-unstyled">
+          <li><a href="#">Terms and Conditions</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+          <li><a href="#">Other Policies</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact Us -->
+      <div class="col-6 col-md-4 col-lg-3">
+        <h6 class="footer-heading">Contact Us</h6>
+        <ul class="footer-links list-unstyled">
+          <li><a href="mailto:sales@forestmachining.com">sales@forestmachining.com</a></li>
+          <li><a href="tel:+8612345678901">+86 123 4567 8901</a></li>
+          <li class="footer-address">Dongguan, Guangdong, China</li>
+        </ul>
+
+        <!-- 社交媒体 -->
+        <div class="footer-social mt-3">
+          <span class="footer-social-label">Follow Us</span>
+          <a href="#" aria-label="LinkedIn" class="footer-social-link" target="_blank" rel="noopener">
+            <i class="bi bi-linkedin"></i>
+          </a>
+          <a href="#" aria-label="YouTube" class="footer-social-link" target="_blank" rel="noopener">
+            <i class="bi bi-youtube"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
     <!-- 分隔线 -->
     <hr class="footer-divider">
     <!-- 底部版权与品牌 -->
     <div class="row align-items-center py-3">
       <div class="col-md-6 text-center text-md-start">
         <a href="{% url 'home:index' %}" class="footer-brand">
-          <img src="{% static 'image/logo.jpeg' %}" alt="Forest Machining" height="32">
+          <img src="{% static 'image/logo.jpeg' %}" alt="Forest Machining" height="36">
           <span class="footer-brand-name">Forest Machining</span>
         </a>
       </div>

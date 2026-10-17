@@ -1,0 +1,81 @@
+<form novalidate action="{% url 'user:register' %}" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="next" value="{{ request.path }}">
+
+  <div class="row mb-3">
+    <label for="{{ form_obj.email.id_for_label }}" class="col-sm-3 col-form-label text-end">
+      {{ form_obj.email.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form_obj.email }}
+      <div class="form-text">We'll never share your information with anyone else.</div>
+      <span class="text-danger small">{{ register_errors.email.0 }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="{{ form_obj.password.id_for_label }}" class="col-sm-3 col-form-label text-end">
+      {{ form_obj.password.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form_obj.password }}
+      <span class="text-danger small">{{ register_errors.password.0 }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="{{ form_obj.repassword.id_for_label }}" class="col-sm-3 col-form-label text-end">
+      {{ form_obj.repassword.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form_obj.repassword }}
+      <span class="text-danger small">{{ register_errors.repassword.0 }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="{{ form_obj.first_name.id_for_label }}" class="col-sm-3 col-form-label text-end">
+      {{ form_obj.first_name.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form_obj.first_name }}
+      <span class="text-danger small">{{ register_errors.first_name.0 }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="{{ form_obj.last_name.id_for_label }}" class="col-sm-3 col-form-label text-end">
+      {{ form_obj.last_name.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form_obj.last_name }}
+      <span class="text-danger small">{{ register_errors.last_name.0 }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="{{ form_obj.mobile.id_for_label }}" class="col-sm-3 col-form-label text-end">
+      {{ form_obj.mobile.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form_obj.mobile }}
+      <span class="text-danger small">{{ register_errors.mobile.0 }}</span>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <label for="{{ form_obj.country.id_for_label }}" class="col-sm-3 col-form-label text-end">
+      {{ form_obj.country.label }}
+    </label>
+    <div class="col-sm-9">
+      {{ form_obj.country }}
+      <span class="text-danger small">{{ register_errors.country.0 }}</span>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-between align-items-center">
+    <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal"
+       data-bs-dismiss="modal" class="btn btn-link px-0">Already have an account? Login</a>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>

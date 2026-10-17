@@ -1,0 +1,69 @@
+{% load static %}
+<header>
+  <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <div class="container-fluid">
+      <!-- 左侧：Logo -->
+      <a class="navbar-brand" href="{% url 'home:index' %}">
+        <img src="{% static 'image/logo.jpeg' %}" alt="Forest Machining" height="40">
+        Forest Machining
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarCollapse">
+        <!-- 中间：导航链接 -->
+        <ul class="navbar-nav mx-auto mb-2 mb-md-0 gap-4">
+          <li class="nav-item">
+            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'home' %}active{% endif %}"
+               href="{% url 'home:index' %}">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'capability' %}active{% endif %}"
+               href="{% url 'capability:list' %}">Capabilities</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'materials' %}active{% endif %}"
+               href="#">Materials</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'industries' %}active{% endif %}"
+               href="#">Industries</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'blog' %}active{% endif %}"
+               href="#">Blog</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'about' %}active{% endif %}"
+               href="#">About Us</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'contact' %}active{% endif %}"
+               href="#">Contact</a>
+          </li>
+        </ul>
+        <!-- 右侧：用户菜单 -->
+        <ul class="navbar-nav ms-auto align-items-center">
+          {% if request.user.is_authenticated %}
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">{{ request.user.username }}</a>
+            <ul class="dropdown-menu dropdown-menu-end">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">My Articles</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="{% url 'user:logout' %}">Logout</a></li>
+            </ul>
+          </li>
+          {% else %}
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#loginModal">Login</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#registerModal">Register</a>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,9 +1,13 @@
-{% extends "common/base.html" %}
+{% extends 'common/base.html' %}
 {% load static %}
+
+{% block page_title %}{{ SITE_NAME|default:"Forest Machining" }} - Precision CNC Manufacturing{% endblock %}
+{% block meta_description %}Forest Machining provides precision CNC turning, milling, 5-axis machining, and rapid prototyping services.{% endblock %}
+
 {% block extra_json_ld %}
-    <script type="application/ld+json">
-    {{ faq_schema_json|safe }}
-    </script>
+<script type="application/ld+json">
+{{ faq_schema_json|safe }}
+</script>
 {% endblock %}
 
 {% block content %}

@@ -141,10 +141,10 @@ body {
   }
 }
 
-/* 修复轮播箭头按钮无法点击 */
+/* 修复轮播箭头按钮无法点击（同时避免遮挡导航栏） */
 .carousel-control-prev,
 .carousel-control-next {
-  z-index: 1050 !important;
+  z-index: 5 !important;
   pointer-events: auto !important;
   cursor: pointer !important;
 }

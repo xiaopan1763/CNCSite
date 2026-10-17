@@ -1,0 +1,389 @@
+{% extends "common/base.html" %}
+{% load static %}
+{% block extra_json_ld %}
+    <script type="application/ld+json">
+    {{ faq_schema_json|safe }}
+    </script>
+{% endblock %}
+
+{% block content %}
+<main>
+  <div id="myCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-indicators">
+      {% for banner in banners %}
+      <button type="button"
+              data-bs-target="#myCarousel"
+              data-bs-slide-to="{{ forloop.counter0 }}"
+              {% if forloop.first %}class="active" aria-current="true"{% endif %}
+              aria-label="Slide {{ forloop.counter }}"></button>
+      {% endfor %}
+    </div>
+
+    <div class="carousel-inner">
+      {% for banner in banners %}
+      <div class="carousel-item {% if forloop.first %}active{% endif %}">
+        <img src="{{ banner.image.url }}" class="d-block w-100" alt="{{ banner.title }}">
+        <div class="carousel-caption text-start" style="left:0; right:0; padding-left:5%; padding-right:5%;">
+          <div class="container-fluid px-0">
+            <div class="row">
+              <div class="col-lg-6">
+                {% if banner.eyebrow %}
+                <p class="small mb-1">{{ banner.eyebrow }}</p>
+                {% endif %}
+
+                {% if banner.subtitle %}
+                <p class="text-uppercase small fw-bold mb-2">{{ banner.subtitle }}</p>
+                {% endif %}
+
+                <h1 class="display-4 fw-bold">{{ banner.title|safe }}</h1>
+
+                {% if banner.extra_html %}
+                {{ banner.extra_html|safe }}
+                {% endif %}
+
+                {% if banner.primary_btn_text or banner.secondary_btn_text %}
+                <div class="d-flex flex-wrap gap-2 mt-3">
+                  {% if banner.primary_btn_text %}
+                  <a class="btn btn-warning btn-lg" href="{{ banner.primary_btn_url }}">{{ banner.primary_btn_text }}</a>
+                  {% endif %}
+                  {% if banner.secondary_btn_text %}
+                  <a class="btn btn-dark btn-lg" href="{{ banner.secondary_btn_url }}">{{ banner.secondary_btn_text }}</a>
+                  {% endif %}
+                </div>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="carousel-item active">
+        <div class="text-center p-5" style="background:#1A2F4C; color:#fff; min-height:400px;">
+          <h1>Welcome to Forest Machining</h1>
+          <p class="lead">请在后台添加轮播图数据。</p>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#myCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#myCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+  <!-- Marketing messaging and featurettes
+  ================================================== -->
+  <!-- Wrap the rest of the page in another container to center all the content. -->
+  <div class="container-fluid px-4 px-lg-5 marketing py-5">
+    <!-- Capabilities Section -->
+    <div class="row justify-content-center">
+      {% for cat in featured_categories %}
+      <div class="col-lg-4 text-center">
+        {% if cat.image %}
+        <img src="{{ cat.image.url }}"
+          class="rounded-circle mb-3"
+          width="180" height="180"
+          style="object-fit: cover;"
+          alt="{{ cat.name }}">
+        {% endif %}
+        <h2 class="fw-normal">{{ cat.name }}</h2>
+      <p>{{ cat.desc }}</p>
+      <p><a class="btn btn-secondary" href="#">Learn More &raquo;</a></p>
+      </div>
+      {% empty %}
+      <p class="text-center text-muted">暂无分类数据，请在后台添加。</p>
+      {% endfor %}
+    </div>
+    <!-- Industries Section -->
+    <section id="industries-list" class="py-5" style="background-color: #f2f2f2;">
+      <div class="container-fluid px-4 px-lg-5">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h1 class="fw-normal">Industries We Serve</h1>
+          </div>
+        </div>
+        <div class="row g-4">
+          {% for industry in industries %}
+          <div class="col-md-6 col-lg-4">
+            <div class="industry-item d-flex align-items-center">
+              <i class="{{ industry.icon|default:'bi bi-building' }} industry-icon me-3"></i>
+              <div class="industry-title">{{ industry.name }}</div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center">暂无行业数据，请在后台添加。</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- Capabilities Fact Table -->
+    <section class="py-5">
+      <div class="container-fluid px-4 px-lg-5">
+        <div class="row mb-4">
+          <div class="col-lg-8">
+            <h2 class="fw-bold mb-3">Manufacturing Capabilities at a Glance</h2>
+            <p class="text-muted">Key technical specifications for our precision CNC machining services.</p>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-middle fact-table">
+            <thead>
+              <tr>
+                <th scope="col">Capability</th>
+                <th scope="col">Specification</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for spec in fact_specs %}
+              <tr>
+              <td><strong>{{ spec.label }}</strong></td>
+              <td>{{ spec.value }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+              <td colspan="2" class="text-center text-muted">暂无数据，请在后台添加。</td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+    <!-- Core Capabilities Section -->
+    <section class="py-5 bg-white">
+      <div class="container-fluid px-4 px-lg-5">
+        <!-- 板块标题与介绍 -->
+        <div class="row mb-5">
+          <div class="col-lg-6">
+            <h2 class="fw-bold mb-3">Precision Manufacturing Services</h2>
+            <p class="text-muted">From prototyping to production, we deliver precision parts with speed and consistency.</p>
+          </div>
+          <div class="col-lg-6">
+            <p class="text-muted">With advanced CNC machining, sheet metal fabrication, 3D printing, and more, we serve industries including aerospace, automotive, medical, and electronics. Whether you need a single prototype or low-to-high volume production, we are your trusted partner for complex, custom parts.</p>
+          </div>
+        </div>
+        <!-- 工艺卡片网格 -->
+        <div class="row g-4">
+          {% for cap in featured_capabilities %}
+          <div class="col-sm-6 col-lg-3">
+            <div class="card h-100 border-0 shadow-sm service-card">
+              {% if cap.image %}
+              <img src="{{ cap.image.url }}"
+                class="card-img-top"
+                alt="{{ cap.title }}"
+                style="height: 200px; object-fit: cover;">
+              {% endif %}
+              <div class="card-body">
+                <h5 class="card-title fw-semibold">{{ cap.title }}</h5>
+                <p class="card-text text-muted small">{{ cap.excerpt }}</p>
+                <a href="#" class="btn btn-sm btn-outline-primary">Learn More</a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center text-muted">暂无工艺数据，请在后台勾选"首页显示"。</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- How to Order Section -->
+    <section class="py-5 bg-white" id="how-to-order">
+      <div class="container-fluid px-4 px-lg-5">
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h2 class="fw-bold">How to Order Parts</h2>
+            <p class="text-muted">Simple steps to get your custom parts from Forest Machining.</p>
+          </div>
+        </div>
+
+        <div class="row g-4 text-center">
+          {% for step in order_steps %}
+          <div class="col-md-6 col-lg-3">
+            <div class="step-card p-4 h-100">
+              <div class="step-icon mb-3">
+                <i class="{{ step.icon|default:'bi bi-gear' }}"></i>
+              </div>
+              <h5 class="step-title fw-semibold">{{ step.title }}</h5>
+              <p class="step-desc text-muted small">{{ step.description }}</p>
+            </div>
+          </div>
+          {% empty %}
+          <p class="text-center text-muted">暂无下单步骤，请在后台添加。</p>
+          {% endfor %}
+        </div>
+      </div>
+    </section>
+    <!-- ==================== 客户评价与全球能力板块 ==================== -->
+    <section class="py-5" style="background-color: #f8f9fa;" id="trust-section">
+      <div class="container-fluid px-4 px-lg-5">
+        <!-- ===== 第一部分：客户评价 ===== -->
+        <section class="py-5" style="background: #f8f9fa;">
+          <div class="container-fluid px-4 px-lg-5">
+            <div class="row mb-5">
+              <div class="col-12 text-center">
+                <h2 class="fw-bold">What Our Clients Say About Us</h2>
+              </div>
+            </div>
+
+            <!-- 综合评分：居中横向 -->
+            <div class="row mb-5">
+              <div class="col-12 text-center">
+                <h4 class="fw-bold text-warning mb-2">Excellent</h4>
+                <div class="mb-2 review-stars">
+                  {% with avg_rating|floatformat:"0" as stars %}
+                    {% for i in "12345" %}
+                      {% if forloop.counter <= stars %}
+                        <i class="bi bi-star-fill"></i>
+                      {% else %}
+                        <i class="bi bi-star"></i>
+                      {% endif %}
+                    {% endfor %}
+                  {% endwith %}
+                </div>
+                <p class="text-muted small mb-0">Based on <strong>{{ review_count }} reviews</strong> · Trustpilot</p>
+              </div>
+            </div>
+
+            <!-- 评价卡片：大屏一行 5 条 -->
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 row-cols-xl-5 g-4">
+              {% for t in testimonials %}
+              <div class="col">
+                <div class="review-card h-100">
+                  <div class="review-stars mb-2">
+                    {% for i in "12345" %}
+                      {% if forloop.counter <= t.rating %}
+                        <i class="bi bi-star-fill"></i>
+                      {% else %}
+                        <i class="bi bi-star"></i>
+                      {% endif %}
+                    {% endfor %}
+                  </div>
+                  <p class="review-author small mb-1"><strong>{{ t.author }}</strong>, {{ t.date_text }}</p>
+                  <h6 class="review-title">{{ t.title }}</h6>
+                  <p class="review-text">{{ t.content }}</p>
+                </div>
+              </div>
+              {% empty %}
+              <div class="col">
+                <p class="text-center text-muted">暂无客户评价，请在后台添加。</p>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </section>
+        <!-- ===== 第二部分：全球供应能力（地图背景 + 文字叠加） ===== -->
+        <div class="global-section position-relative">
+          <!-- 地图背景层 -->
+          <div class="global-map-bg"></div>
+
+          <!-- 文字内容层 -->
+          <div class="container-fluid px-4 px-lg-5 position-relative">
+            <div class="row">
+              <div class="col-lg-8 mx-auto text-center">
+                <h2 class="fw-bold mb-4">Your Trusted Manufacturing Partner<br>in China. Global Shipping</h2>
+                <p class="text-muted mb-5">
+                  Based in China, Forest Machining combines in-house production with a strong network of vetted local suppliers to deliver fast, high-quality on-demand manufacturing solutions. We provide global shipping with delivery to North America and Europe in as little as 3–10 days. With English-speaking project engineers and fast response times, we support customers across time zones to keep production running smoothly.
+                </p>
+
+                <!-- 数据统计：从数据库读取 -->
+                <div class="row g-4 justify-content-center">
+                  {% for stat in stats_partner %}
+                  <div class="col-6 col-md-3">
+                    <div class="stat-item">
+                      <div class="stat-number">{{ stat.value }}{{ stat.suffix }}</div>
+                      <div class="stat-label">{{ stat.label }}</div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- FAQ Section -->
+    <section class="py-5" id="faq" style="background: #f8f9fa;">
+      <div class="container-fluid px-4 px-lg-5">
+        <div class="row g-5">
+          <!-- 左侧标题区 -->
+          <div class="col-lg-4">
+            <h2 class="fw-bold mb-3">Forest Machining FAQs</h2>
+            <p class="text-muted mb-4">
+              Find quick answers about our CNC machining capabilities, tolerances, materials, lead times, and quality standards. Need more details? Request a quote or contact our engineering team.
+            </p>
+            <a href="#" class="btn btn-lg mb-2" style="background: #2E5C4E; color: #fff; font-weight: 600; padding: 12px 28px; border-radius: 8px;">
+              Request a Quote
+            </a>
+          </div>
+
+          <!-- 右侧折叠问答 -->
+          <div class="col-lg-8">
+            <div class="accordion faq-accordion" id="faqAccordion">
+              {% for item in faq_items %}
+              <div class="accordion-item">
+                <h3 class="accordion-header" id="faqHeading{{ forloop.counter }}">
+                  <button class="accordion-button {% if not forloop.first %}collapsed{% endif %}"
+                          type="button"
+                          data-bs-toggle="collapse"
+                          data-bs-target="#faqCollapse{{ forloop.counter }}"
+                          aria-expanded="{% if forloop.first %}true{% else %}false{% endif %}"
+                          aria-controls="faqCollapse{{ forloop.counter }}">
+                    {{ item.question }}
+                  </button>
+                </h3>
+                <div id="faqCollapse{{ forloop.counter }}"
+                    class="accordion-collapse collapse {% if forloop.first %}show{% endif %}"
+                    aria-labelledby="faqHeading{{ forloop.counter }}"
+                    data-bs-parent="#faqAccordion">
+                  <div class="accordion-body">
+                    {{ item.answer }}
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- ==================== Ready to Order CTA Section ==================== -->
+    <section class="cta-section position-relative" id="ready-to-order">
+      <!-- 背景图 + 白色半透明遮罩 -->
+      <div class="cta-bg"></div>
+      <div class="container position-relative">
+        <div class="row align-items-center">
+          <!-- 标题 -->
+          <div class="col-12 text-center mb-4">
+            <h2 class="cta-title fw-bold">Ready to Order Your Parts?</h2>
+          </div>
+          <!-- 左侧：统计数据（动态） -->
+          <div class="col-md-6 col-lg-5 mb-4 mb-md-0">
+            <div class="d-flex justify-content-center justify-content-md-end gap-5">
+              {% for stat in stats_order %}
+              <div class="stat-item text-center">
+                <div class="stat-label">{{ stat.label }}</div>
+                <div class="stat-number">{{ stat.value }}{{ stat.suffix }}</div>
+              </div>
+              {% endfor %}
+            </div>
+          </div>
+          <!-- 右侧：CTA 按钮 -->
+          <div class="col-md-6 col-lg-7">
+            <div class="text-center text-md-start">
+              <a href="#" class="btn btn-primary btn-lg cta-btn">
+                Request a Quote
+              </a>
+              <p class="cta-note mt-3 mb-0"><em>All uploads are secure and confidential.</em></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div><!-- /.container -->
+</main>
+{% endblock content %}
