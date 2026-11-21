@@ -1,0 +1,546 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+<!-- ===== SEO: 页面标题与描述 ===== -->
+{% block page_title %}{{ capability.title }} Services - Forest Machining{% endblock %}
+{% block meta_description %}{{ capability.excerpt|default:capability.title }}{% endblock %}
+{% block canonical_url %}https://guanhaoauto.com{% url 'capability:detail' capability.slug %}{% endblock %}
+
+<!-- ===== GEO: 注入当前工艺的 JSON-LD 结构化数据 ===== -->
+{% block extra_json_ld %}
+<script type="application/ld+json">
+  {{ capability.structured_data|safe }}
+</script>
+{% endblock %}
+
+<!-- ===== 页面专属 CSS ===== -->
+{% block extra_css %}
+<!-- 引入专门为 capability 应用写的公共 CSS -->
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+<!-- ===== 页面内容 ===== -->
+{% block content %}
+<!-- ==================== 1. Hero 首屏 ==================== -->
+<section class="page-hero">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-lg-7">
+        <!-- 动态标题 -->
+        <h1>{{ capability.title }} Services</h1>
+        <!-- 动态摘要 -->
+        <p class="lead">
+          {% if capability.excerpt %}
+            {{ capability.excerpt }}
+          {% else %}
+            High-precision parts for prototypes and production.
+          {% endif %}
+        </p>
+        <!-- 【修改】动态读取首屏卖点 -->
+        <ul class="list-unstyled hero-features">
+          {% if capability.hero_features %}
+            {% for feature in capability.hero_features.splitlines %}
+              {% if feature.strip %}
+                <li><i class="bi bi-check-circle-fill me-2"></i>{{ feature }}</li>
+              {% endif %}
+            {% endfor %}
+          {% endif %}
+        </ul>
+        <div class="mt-4">
+          <a href="#quote" class="btn btn-hero btn-lg me-3">Request a Quote</a>
+          <a href="#specs" class="btn btn-outline-light btn-lg">View Specifications</a>
+        </div>
+        <p class="file-formats mt-3">
+          STEP | STP | IGES | PDF | DWG | X_T
+        </p>
+        <p class="secure-note">
+          <i class="bi bi-lock"></i> All uploads are secure and confidential.
+        </p>
+      </div>
+      <div class="col-lg-5 text-center d-none d-lg-block">
+        {% if capability.image %}
+          <!-- 优先显示后台图片 -->
+          <img src="{{ capability.image.url }}" 
+               alt="{{ capability.title }}" 
+               class="img-fluid rounded shadow-lg"
+               style="max-height: 400px; object-fit: cover; width: 100%;">
+        {% else %}
+          <!-- 没有上传图片时，显示优雅的占位框 -->
+          <div class="d-flex flex-column align-items-center justify-content-center rounded shadow-lg" 
+               style="height: 400px; width: 100%; background: rgba(255, 255, 255, 0.1); border: 2px dashed rgba(255, 255, 255, 0.3);">
+            <i class="bi bi-image text-white opacity-50 mb-3" style="font-size: 4rem;"></i>
+            <h5 class="text-white opacity-75">{{ capability.title }}</h5>
+            <p class="text-white opacity-50 small">Image Coming Soon</p>
+          </div>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==================== 2. 能力介绍 ==================== -->
+<section class="py-5 bg-white">
+    <div class="container">
+      <!-- 借用首页的左右分栏排版结构 -->
+      <div class="row mb-4">
+        <div class="col-lg-4 mb-4 mb-lg-0">
+          <h2 class="fw-bold mb-3" style="font-size: 2.2rem; color: #1A2F4C;">
+            Precision {{ capability.title }} Service
+          </h2>
+          <div style="width: 60px; height: 4px; background: #2E5C4E; margin-bottom: 1rem;"></div>
+          <p class="text-muted">
+            {{ capability.excerpt }}
+          </p>
+        </div>
+        <div class="col-lg-8">
+          <!-- 右侧直接渲染富文本描述 -->
+          <div class="ckeditor-content text-muted" style="line-height: 1.8; font-size: 1.05rem;">
+            {{ capability.description|safe }}
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<!-- ==================== 3. 技术规格与设计指南 ==================== -->
+<section class="py-5 bg-white">
+  <div class="container">
+    <!-- 顶部标题与简介 (静态显示) -->
+    <div class="row mb-5">
+      <div class="col-lg-8">
+          <!-- 静态标题：可以巧妙地带上动态工艺名，如 Tolerances & Design Guidelines for CNC Turning -->
+          <h2 class="fw-bold mb-3" style="font-size: 2rem; color: #1A2F4C;">
+            Tolerances & Design Guidelines for {{ capability.title }}
+          </h2>
+          <!-- 静态简介 -->
+          <p class="text-muted">
+            As an ISO 9001 certified manufacturer, we machine precision parts to meet strict dimensional requirements. Use the following guidelines when preparing your drawing or CAD file.
+          </p>
+      </div>
+    </div>
+    <div class="row g-5">
+      <!-- 左侧：服务公差 (Service Tolerances) -->
+      <div class="col-lg-6">
+        <h5 class="fw-bold mb-4" style="color: #1A2F4C;">
+          <span style="display:inline-block; width: 4px; height: 20px; background: #2E5C4E; margin-right: 10px; vertical-align: middle;"></span>
+          Service Tolerances
+        </h5>
+        <div class="table-responsive fact-table">
+          <table class="table mb-0">
+            <tbody>
+                {% for spec in tolerance_specs %}
+                <tr>
+                  <td><strong>{{ spec.label }}</strong></td>
+                  <td>{{ spec.value|linebreaksbr }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="2" class="text-muted">No tolerance data available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <!-- 右侧：设计指南 (Design Guidelines) -->
+      <div class="col-lg-6">
+        <h5 class="fw-bold mb-4" style="color: #1A2F4C;">
+          <span style="display:inline-block; width: 4px; height: 20px; background: #2E5C4E; margin-right: 10px; vertical-align: middle;"></span>
+          Design Guidelines
+        </h5>
+        <div class="table-responsive fact-table">
+          <table class="table mb-0">
+            <tbody>
+                {% for spec in guideline_specs %}
+                <tr>
+                  <td><strong>{{ spec.label }}</strong></td>
+                  <td>{{ spec.value|linebreaksbr }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                  <td colspan="2" class="text-muted">No guideline data available.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==================== 4. 我们的加工优势 ==================== -->
+<section class="py-5" style="background: #f8f9fa;">
+    <div class="container">
+      <div class="row mb-5 text-center">
+        <div class="col-12">
+          <!-- 标题自动读取当前工艺名 -->
+          <h2 class="fw-bold" style="font-size: 2rem; color: #1A2F4C;">
+            Advantages of {{ capability.title }} with Forest Machining
+          </h2>
+        </div>
+      </div>
+      <div class="row g-4 text-start">
+        <!-- 优势 1 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="advantage-card p-4 h-100 bg-white rounded shadow-sm">
+            <div class="icon mb-3" style="font-size: 2.5rem; color: #2E5C4E;">
+              <i class="bi bi-clock-history"></i>
+            </div>
+            <h5 class="fw-bold mb-3" style="color: #1A2F4C;">Rapid Turnaround</h5>
+            <p class="text-muted small mb-0">
+              Using the latest {{ capability.title }} machines, we produce highly accurate parts in as fast as 3 days, with expedited options down to 24 hours.
+            </p>
+          </div>
+        </div>
+        <!-- 优势 2 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="advantage-card p-4 h-100 bg-white rounded shadow-sm">
+            <div class="icon mb-3" style="font-size: 2.5rem; color: #2E5C4E;">
+              <i class="bi bi-bullseye"></i>
+            </div>
+            <h5 class="fw-bold mb-3" style="color: #1A2F4C;">High Precision</h5>
+            <p class="text-muted small mb-0">
+              We offer various tolerance options in accordance with ISO 2768 and can achieve precision down to ±0.005 mm for your {{ capability.title }} projects.
+            </p>
+          </div>
+        </div>
+        <!-- 优势 3 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="advantage-card p-4 h-100 bg-white rounded shadow-sm">
+            <div class="icon mb-3" style="font-size: 2.5rem; color: #2E5C4E;">
+              <i class="bi bi-palette"></i>
+            </div>
+            <h5 class="fw-bold mb-3" style="color: #1A2F4C;">Custom Finishes</h5>
+            <p class="text-muted small mb-0">
+              Select from a variety of finishes on metal and plastic parts, including anodizing, polishing, bead blasting, and more.
+            </p>
+          </div>
+        </div>
+        <!-- 优势 4 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="advantage-card p-4 h-100 bg-white rounded shadow-sm">
+            <div class="icon mb-3" style="font-size: 2.5rem; color: #2E5C4E;">
+              <i class="bi bi-boxes"></i>
+            </div>
+            <h5 class="fw-bold mb-3" style="color: #1A2F4C;">Material Selection</h5>
+            <p class="text-muted small mb-0">
+              Choose from over 30 metal and plastic materials. We provide certified materials with full traceability and inspection reports.
+            </p>
+          </div>
+        </div>
+        <!-- 优势 5 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="advantage-card p-4 h-100 bg-white rounded shadow-sm">
+            <div class="icon mb-3" style="font-size: 2.5rem; color: #2E5C4E;">
+              <i class="bi bi-arrows-fullscreen"></i>
+            </div>
+            <h5 class="fw-bold mb-3" style="color: #1A2F4C;">Any Size</h5>
+            <p class="text-muted small mb-0">
+              You can order {{ capability.title }} parts from a single prototype to mass production, scaling seamlessly with your needs.
+            </p>
+          </div>
+        </div>
+        <!-- 优势 6 -->
+        <div class="col-md-6 col-lg-4">
+          <div class="advantage-card p-4 h-100 bg-white rounded shadow-sm">
+            <div class="icon mb-3" style="font-size: 2.5rem; color: #2E5C4E;">
+              <i class="bi bi-shield-check"></i>
+            </div>
+            <h5 class="fw-bold mb-3" style="color: #1A2F4C;">Quality Control</h5>
+            <p class="text-muted small mb-0">
+              Our QA department performs strict quality assurance and dimensional inspections to ensure every part meets your specifications.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<!-- ==================== 5. 加工材料 (Materials) ==================== -->
+<section class="py-5 bg-white" id="materials">
+  <div class="container">
+    <!-- 标题与简介 -->
+    <div class="row mb-5">
+      <div class="col-lg-8">
+        <h2 class="fw-bold mb-3" style="font-size: 2rem; color: #1A2F4C;">
+          Materials for {{ capability.title }}
+        </h2>
+        <p class="text-muted">
+          Choose from a wide range of materials. We provide certified materials with full traceability to meet your specific requirements.
+        </p>
+      </div>
+    </div>
+
+    <!-- 选项卡切换 -->
+    <ul class="nav nav-pills mb-4 justify-content-center" id="materialTabs" role="tablist">
+      <!-- 只有当存在金属材料时，才显示 Metals Tab -->
+      {% if metals %}
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active fw-bold px-4 py-2" id="metals-tab" data-bs-toggle="pill" data-bs-target="#metals" type="button" role="tab" aria-controls="metals" aria-selected="true">Metals</button>
+      </li>
+      {% endif %}
+
+      <!-- 只有当存在塑料材料时，才显示 Plastics Tab -->
+      {% if plastics %}
+      <li class="nav-item ms-3" role="presentation">
+        <button class="nav-link {% if not metals %}active{% endif %} fw-bold px-4 py-2" id="plastics-tab" data-bs-toggle="pill" data-bs-target="#plastics" type="button" role="tab" aria-controls="plastics" aria-selected="{% if not metals %}true{% else %}false{% endif %}">Plastics</button>
+      </li>
+      {% endif %}
+
+      <!-- 只有当存在其他材料（如FR4, PI）时，才显示 Others Tab -->
+      {% if others %}
+      <li class="nav-item ms-3" role="presentation">
+        <button class="nav-link {% if not metals and not plastics %}active{% endif %} fw-bold px-4 py-2" id="others-tab" data-bs-toggle="pill" data-bs-target="#others" type="button" role="tab" aria-controls="others" aria-selected="{% if not metals and not plastics %}true{% else %}false{% endif %}">Others</button>
+      </li>
+      {% endif %}
+    </ul>
+
+    <!-- 内容区域 -->
+    <div class="tab-content" id="materialTabsContent">
+      
+      <!-- 金属材料 -->
+      {% if metals %}
+      <div class="tab-pane fade show active" id="metals" role="tabpanel" aria-labelledby="metals-tab">
+        <div class="row g-4">
+          {% for material in metals %}
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm" style="background: #f8f9fa; border-radius: 12px; overflow: hidden;">
+              {% if material.image %}
+              <img src="{{ material.image.url }}" class="card-img-top" alt="{{ material.name }}" style="height: 180px; object-fit: cover;">
+              {% else %}
+              <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px;">
+                <i class="bi bi-box-seam" style="font-size: 4rem; color: #adb5bd;"></i>
+              </div>
+              {% endif %}
+              <div class="card-body">
+                <h5 class="fw-bold mb-2" style="color: #2E5C4E;">{{ material.name }}</h5>
+                <p class="text-muted small mb-0">{{ material.desc }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- 塑料材料 -->
+      {% if plastics %}
+      <div class="tab-pane fade {% if not metals %}show active{% endif %}" id="plastics" role="tabpanel" aria-labelledby="plastics-tab">
+        <div class="row g-4">
+          {% for material in plastics %}
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm" style="background: #f8f9fa; border-radius: 12px; overflow: hidden;">
+              {% if material.image %}
+              <img src="{{ material.image.url }}" class="card-img-top" alt="{{ material.name }}" style="height: 180px; object-fit: cover;">
+              {% else %}
+              <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px;">
+                <i class="bi bi-layers" style="font-size: 4rem; color: #adb5bd;"></i>
+              </div>
+              {% endif %}
+              <div class="card-body">
+                <h5 class="fw-bold mb-2" style="color: #2E5C4E;">{{ material.name }}</h5>
+                <p class="text-muted small mb-0">{{ material.desc }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+
+      <!-- 其他材料 (FR4, PI 等) -->
+      {% if others %}
+      <div class="tab-pane fade {% if not metals and not plastics %}show active{% endif %}" id="others" role="tabpanel" aria-labelledby="others-tab">
+        <div class="row g-4 justify-content-center">
+          {% for material in others %}
+          <div class="col-md-6 col-lg-4">
+            <div class="card h-100 border-0 shadow-sm" style="background: #f8f9fa; border-radius: 12px; overflow: hidden;">
+              {% if material.image %}
+              <img src="{{ material.image.url }}" class="card-img-top" alt="{{ material.name }}" style="height: 180px; object-fit: cover;">
+              {% else %}
+              <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 180px;">
+                <i class="bi bi-cpu" style="font-size: 4rem; color: #adb5bd;"></i>
+              </div>
+              {% endif %}
+              <div class="card-body">
+                <h5 class="fw-bold mb-2" style="color: #2E5C4E;">{{ material.name }}</h5>
+                <p class="text-muted small mb-0">{{ material.desc }}</p>
+              </div>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+      {% endif %}
+      
+    </div>
+
+    <!-- 底部小字提示 -->
+    <div class="text-center mt-4">
+      <p class="text-muted small">Don't see your material? <a href="#quote" style="color: #2E5C4E; font-weight: bold;">Contact us</a> to discuss custom material sourcing.</p>
+    </div>
+  </div>
+</section>
+<!-- ==================== 6. 表面处理 (Surface Finishes) ==================== -->
+<section class="py-5" style="background: #f8f9fa;" id="finishes">
+  <div class="container">
+    <!-- 标题与简介 -->
+    <div class="row mb-5 text-center">
+      <div class="col-lg-8 mx-auto">
+        <h2 class="fw-bold mb-3" style="font-size: 2rem; color: #1A2F4C;">
+          Surface Finishes
+        </h2>
+        <p class="text-muted">
+          Enhance the appearance, corrosion resistance, and functionality of your CNC machined parts. We offer a wide range of standard and custom finishing options.
+        </p>
+      </div>
+    </div>
+    <!-- 卡片网格 -->
+    <div class="row g-4">
+      {% for finish in capability.surface_finishes.all %}
+      <div class="col-6 col-md-4 col-lg-3">
+        <div class="card h-100 border-0 shadow-sm text-center finish-card" style="background: #fff; border-radius: 12px; transition: transform 0.3s; overflow: hidden;">         
+          <!-- 头部：判断是否有图片 -->
+          {% if finish.image %}
+            <img src="{{ finish.image.url }}" class="card-img-top" alt="{{ finish.name }}" style="height: 120px; object-fit: cover;">
+          {% else %}
+            <!-- 如果没有上传图片，则显示优雅的图标占位 -->
+            <div class="card-img-top d-flex align-items-center justify-content-center bg-light" style="height: 120px;">
+              <i class="bi {{ finish.icon|default:'bi-gear' }}" style="font-size: 3rem; color: #1A2F4C;"></i>
+            </div>
+          {% endif %}
+          <div class="card-body p-3">
+            <h6 class="fw-bold mb-2" style="color: #1A2F4C;">{{ finish.name }}</h6>
+            <p class="text-muted small mb-0">{{ finish.desc }}</p>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted py-4">
+        <p>Surface finish details are being updated. Please contact us for more information.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- ==================== 7. 客户评价 (Testimonials) ==================== -->
+<section class="py-5 bg-white" id="testimonials">
+  <div class="container">
+    <div class="row mb-5 text-center">
+      <div class="col-12">
+        <h2 class="fw-bold" style="color: #1A2F4C;">What Our Global Clients Say</h2>
+      </div>
+    </div>
+    <!-- 综合评分 -->
+    <div class="row mb-5">
+      <div class="col-12 text-center">
+        <h4 class="fw-bold text-warning mb-2">Excellent</h4>
+        <div class="mb-2 text-warning review-stars" style="font-size: 1.5rem;">
+          {% with avg_rating|floatformat:"0" as stars %}
+            {% for i in "12345" %}
+              {% if forloop.counter <= stars %}
+                <i class="bi bi-star-fill"></i>
+              {% else %}
+                <i class="bi bi-star"></i>
+              {% endif %}
+            {% endfor %}
+          {% endwith %}
+        </div>
+        <!-- 动态显示评价总数 -->
+        <p class="text-muted small mb-0">Based on <strong>{{ review_count }} reviews</strong> · Trustpilot</p>
+      </div>
+    </div>
+    <!-- 评价卡片动态循环 -->
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-4">
+        {% for t in testimonials %}
+        <div class="col">
+          <div class="card h-100 border-0 shadow-sm p-4" style="background: #f8f9fa; border-radius: 12px;">
+            <!-- 动态星星 -->
+            <div class="text-warning mb-2">
+              {% for i in "12345" %}
+                {% if forloop.counter <= t.rating %}
+                  <i class="bi bi-star-fill"></i>
+                {% else %}
+                  <i class="bi bi-star"></i>
+                {% endif %}
+              {% endfor %}
+            </div>
+            <!-- 动态内容 -->
+            <p class="small mb-1"><strong>{{ t.author }}</strong>, {{ t.date_text }}</p>
+            <h6 class="fw-bold" style="color: #1A2F4C;">{{ t.title }}</h6>
+            <p class="text-muted small mb-0">"{{ t.content }}"</p>
+          </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center text-muted">
+          <p>No reviews yet.</p>
+        </div>
+        {% endfor %}
+    </div>
+  </div>
+</section>
+<!-- ==================== 8. FAQ Section ==================== -->
+<section class="py-5" id="faq" style="background: #f2f2f2;">
+  <div class="container">
+    <div class="row g-5">
+      <!-- 左侧标题区 -->
+      <div class="col-lg-4">
+        <h2 class="fw-bold mb-3" style="color: #1A2F4C;">{{ capability.title }} FAQs</h2>
+        <p class="text-muted mb-4">
+          Find quick answers about our {{ capability.title }} capabilities, tolerances, materials, and lead times. Need more details? Contact our engineering team.
+        </p>
+        <a href="#quote" class="btn btn-lg mb-2" style="background: #2E5C4E; color: #fff; font-weight: 600; padding: 12px 28px; border-radius: 8px;">
+          Request a Quote
+        </a>
+      </div>
+      <!-- 右侧折叠问答 -->
+      <div class="col-lg-8">
+        <div class="accordion" id="faqAccordion">
+            {% for item in faq_items %}
+            <div class="accordion-item border-0 mb-3 shadow-sm rounded">
+              <h3 class="accordion-header" id="faqHeading{{ forloop.counter }}">
+                <button class="accordion-button collapsed fw-bold" type="button" data-bs-toggle="collapse" data-bs-target="#faqCollapse{{ forloop.counter }}" aria-expanded="false" aria-controls="faqCollapse{{ forloop.counter }}">
+                  {{ item.question }}
+                </button>
+              </h3>
+              <div id="faqCollapse{{ forloop.counter }}" class="accordion-collapse collapse" aria-labelledby="faqHeading{{ forloop.counter }}" data-bs-parent="#faqAccordion">
+                <div class="accordion-body text-muted">
+                  {{ item.answer }}
+                </div>
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- ==================== 8 (下). CTA Section ==================== -->
+<section class="page-cta">
+  <div class="container py-4">
+    <div class="row align-items-center">
+      <!-- 标题 -->
+      <div class="col-12 text-center mb-4">
+        <h2 class="fw-bold mb-3" style="font-size: 2.5rem;">Ready to Start Your {{ capability.title }} Project?</h2>
+        <p class="lead mb-0 opacity-75">Upload your CAD files today and get a detailed quote within 24 hours.</p>
+      </div>      
+      <!-- 统计数据 -->
+      <div class="col-12 mb-4">
+          <div class="d-flex justify-content-center gap-5 text-center">
+            <!-- 替换为动态循环 -->
+            {% for stat in stats_order %}
+            <div>
+              <h3 class="fw-bold mb-1 text-warning" style="font-size: 2.2rem;">{{ stat.value }}{{ stat.suffix }}</h3>
+              <p class="small text-uppercase mb-0 opacity-75">{{ stat.label }}</p>
+            </div>
+            {% endfor %}
+          </div>
+      </div>
+      <!-- 按钮 -->
+      <div class="col-12 text-center">
+        <a href="#quote" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">
+          Request a Quote
+        </a>
+        <p class="mt-3 mb-0 small opacity-75"><em><i class="bi bi-lock-fill"></i> All uploads are secure and confidential. NDA available.</em></p>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock content %}

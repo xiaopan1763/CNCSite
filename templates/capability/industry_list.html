@@ -1,0 +1,83 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Industries We Serve | Forest Machining{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">{{ geo_schema_json|safe }}</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- 首屏 (加入 bg-industries 类) -->
+  <section class="page-hero bg-industries">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Industries We Serve</h1>
+      <p class="lead mx-auto" style="max-width: 800px;">
+        Delivering high-precision manufacturing solutions across diverse industries. Our engineering team understands the strict standards of aerospace, medical, automotive, and more.
+      </p>
+    </div>
+  </section>
+
+  <div class="container px-4 px-lg-5 mb-5">
+    <div class="row g-4">
+      {% for industry in industries %}
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4 text-center service-card">
+          <div class="mb-3">
+            <i class="{{ industry.icon|default:'bi bi-building' }}" style="font-size: 3.5rem; color: #2E5C4E;"></i>
+          </div>
+          <h2 class="h4 fw-bold mb-3" style="color: #1A2F4C;">{{ industry.name }}</h2>
+          <p class="text-muted small mb-4">{{ industry.desc|default:"Providing precision manufacturing solutions for this industry." }}</p>
+          
+          <div class="mt-auto">
+            <span class="badge bg-light text-dark border px-3 py-2 mb-3">
+              {{ industry.capabilities.count }} Capabilities Available
+            </span>
+            <br>
+            <a href="{% url 'capability:list' %}" class="btn btn-outline-primary btn-sm mt-2" style="border-radius: 6px;">
+              Explore Solutions <i class="bi bi-arrow-right ms-1"></i>
+            </a>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <div class="col-12 text-center text-muted py-5">
+        <p>No industries found. Please add them in the admin panel.</p>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <!-- 底部 CTA (复用详情页样式) -->
+  <section class="page-cta mt-5">
+    <div class="container text-center">
+      <h2>Ready to Start Your Project?</h2>
+      <p class="lead mb-4 opacity-75">Upload your CAD files today and get a detailed quote within 24 hours.</p>
+      
+      <!-- 统计数据 -->
+      {% if stats_order %}
+      <div class="d-flex justify-content-center gap-5 mb-4">
+        {% for stat in stats_order %}
+        <div>
+          <h3 class="fw-bold mb-1 text-warning" style="font-size: 2.2rem;">{{ stat.value }}{{ stat.suffix }}</h3>
+          <p class="small text-uppercase mb-0 opacity-75">{{ stat.label }}</p>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <a href="#" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">
+        Request a Quote
+      </a>
+      <p class="mt-3 small opacity-75"><em><i class="bi bi-lock-fill"></i> All uploads are secure and confidential.</em></p>
+    </div>
+  </section>
+</main>
+{% endblock %}

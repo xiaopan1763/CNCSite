@@ -21,6 +21,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import StaticViewSitemap
+from capability import views as capability_views # 引入视图
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -31,6 +32,9 @@ urlpatterns = [
     path('', include('home.urls')),  # 把home应用的urls.py文件包含进来，这样才能访问 / 下的路径
     path('user/', include('user.urls')),  # 把user应用的urls.py文件包含进来，这样才能访问 /register/、/login/ 等路径
     path('capabilities/', include('capability.urls')),  # 把capability应用的urls.py文件包含进来，这样才能访问 /capability/ 下的路径
+    # 直接在根目录暴露 materials 和 industries
+    path('materials/', capability_views.MaterialListView.as_view(), name='materials'),
+    path('industries/', capability_views.IndustryListView.as_view(), name='industries'),
     path('ckeditor/', include('django_ckeditor_5.urls')),  # 挂载CKEditor5相关URL
     
     # 新增三个GEO优化URL

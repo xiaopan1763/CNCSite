@@ -3,7 +3,7 @@ from .models import Banner, FactSpec, FAQ, StatItem, OrderStep, Testimonial
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
-    list_display = ('title', 'order', 'is_active')
+    list_display = ('title', 'subtitle', 'eyebrow', 'extra_html', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     search_fields = ('title', 'subtitle', 'eyebrow')
     fieldsets = (
@@ -34,7 +34,7 @@ class FactSpecAdmin(admin.ModelAdmin):
 
 @admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
-    list_display = ('question', 'order', 'is_active')
+    list_display = ('question', 'answer', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     search_fields = ('question', 'answer')
 
@@ -47,14 +47,14 @@ class StatItemAdmin(admin.ModelAdmin):
 
 @admin.register(OrderStep)
 class OrderStepAdmin(admin.ModelAdmin):
-    list_display = ('title', 'icon', 'order', 'is_active')
+    list_display = ('title', 'description', 'icon', 'order', 'is_active')
     list_editable = ('order', 'is_active')
     search_fields = ('title', 'description')
 
 
 @admin.register(Testimonial)
 class TestimonialAdmin(admin.ModelAdmin):
-    list_display = ('author', 'title', 'rating', 'order', 'is_active')
+    list_display = ('author', 'title', 'content', 'rating', 'order', 'is_active')
     list_editable = ('rating', 'order', 'is_active')
     search_fields = ('author', 'title', 'content')
     list_filter = ('rating', 'is_active')

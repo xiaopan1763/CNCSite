@@ -1,0 +1,173 @@
+/* =========================================================
+   capability.css - 工艺列表页 & 详情页公共样式
+   ========================================================= */
+
+/* ===== 1. 通用 Hero 首屏 (深色渐变) ===== */
+.page-hero {
+  background: linear-gradient(135deg, #1A2F4C 0%, #2E5C4E 100%);
+  color: #fff;
+  padding: 120px 0 80px; /* 兼顾导航栏高度和留白 */
+  margin-bottom: 4rem;
+}
+.page-hero h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.page-hero .lead {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+.page-hero p {
+  opacity: 0.8;
+}
+
+/* ===== 2. CTA 底部行动呼吁 (深色遮罩 + 背景图) ===== */
+.page-cta {
+  /* 注意：图片路径如果在 CSS 中，直接写 /static/... 即可 */
+  background: linear-gradient(rgba(26, 47, 76, 0.85), rgba(46, 92, 78, 0.85)), 
+              url('/static/image/capability-cta-bg.jpg') center center / cover no-repeat;
+  color: #fff;
+  padding: 6rem 0;
+}
+.page-cta h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+.btn-cta {
+  background-color: #fff;
+  color: #1A2F4C;
+  font-weight: 600;
+  padding: 12px 32px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.btn-cta:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+  color: #1A2F4C;
+}
+
+/* ===== 3. 详情页富文本排版美化 (CKEditor) ===== */
+.ckeditor-content h2, 
+.ckeditor-content h3 {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #1A2F4C;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  padding-left: 12px;
+  border-left: 4px solid #2E5C4E;
+}
+.ckeditor-content p {
+  margin-bottom: 1.2rem;
+}
+.ckeditor-content ul {
+  list-style: none;
+  padding-left: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 12px;
+  margin-bottom: 2rem;
+}
+.ckeditor-content ul li {
+  position: relative;
+  padding-left: 24px;
+  background: #f8f9fa;
+  padding: 12px 12px 12px 36px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  font-size: 0.95rem;
+}
+.ckeditor-content ul li::before {
+  content: "\F26E"; /* Bootstrap icon check-circle */
+  font-family: "bootstrap-icons";
+  position: absolute;
+  left: 12px;
+  top: 14px;
+  color: #2E5C4E;
+  font-size: 1.1rem;
+}
+.ckeditor-content strong {
+  color: #1A2F4C;
+}
+
+/* ===== 4. 详情页表面处理卡片 / 材料标签卡 ===== */
+.finish-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 .5rem 1rem rgba(0,0,0,.15)!important;
+}
+.nav-pills .nav-link.active {
+  background-color: #1A2F4C !important;
+  color: #fff !important;
+}
+
+/* ===== 5. 列表页专属排版 ===== */
+/* 分类标题的左侧绿线 */
+.category-header h2 {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #1A2F4C;
+  margin-bottom: 0.5rem;
+  position: relative;
+  padding-left: 16px;
+}
+.category-header h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 6px;
+  background: #2E5C4E;
+  border-radius: 3px;
+}
+.category-header p {
+  font-size: 1.05rem;
+  color: #6c757d;
+  padding-left: 16px;
+  margin-bottom: 2.5rem;
+}
+.category-section {
+  margin-bottom: 5rem;
+}
+
+/* 仅列表页首屏带背景图 */
+.page-hero.list-hero-bg {
+  background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
+              url('/static/image/capability-list-hero.jpg') center center / cover no-repeat;
+}
+
+/* ===== 6. Materials & Industries 专属背景图 ===== */
+.page-hero.bg-materials {
+  background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
+              url('/static/image/materials-hero.jpg') center center / cover no-repeat;
+}
+.page-hero.bg-industries {
+  background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
+              url('/static/image/industries-hero.jpg') center center / cover no-repeat;
+}
+
+/* ===== 7. 材料页分类区块排版 ===== */
+.material-section {
+  margin-bottom: 5rem;
+}
+.material-section h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1A2F4C;
+  position: relative;
+  padding-left: 16px;
+  margin-bottom: 2rem;
+}
+.material-section h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 10%;
+  height: 80%;
+  width: 6px;
+  background: #2E5C4E;
+  border-radius: 3px;
+}

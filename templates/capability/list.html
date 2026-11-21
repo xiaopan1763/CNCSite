@@ -1,0 +1,117 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+<!-- SEO 标题和描述 -->
+{% block page_title %}Manufacturing Capabilities & Services | Forest Machining{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+<!-- 注入 GEO JSON-LD 结构化数据 -->
+{% block extra_json_ld %}
+<script type="application/ld+json">
+  {{ geo_schema_json|safe }}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- 1. 深色渐变首屏 (Page Header) -->
+  <section class="page-hero list-hero-bg">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Manufacturing Capabilities</h1>
+      <p class="mx-auto">
+        From rapid prototyping to low-volume production, we deliver precision parts with speed and consistency. Explore our comprehensive range of services below.
+      </p>
+    </div>
+  </section>
+
+  <!-- 2. 分类及工艺卡片区域 -->
+  <div class="container px-4 px-lg-5">
+    {% for category in categories %}
+      <section class="category-section">
+        
+        <!-- 分类标题与描述 -->
+        <div class="category-header">
+          <h2>{{ category.name }}</h2>
+          {% if category.desc %}
+            <p>{{ category.desc }}</p>
+          {% else %}
+            <p>Discover our high-quality services in this category.</p>
+          {% endif %}
+        </div>
+
+        <!-- 工艺卡片网格 -->
+        <div class="row g-4">
+          {% for cap in category.capabilities.all %}
+          <div class="col-sm-6 col-lg-3">
+            <!-- 直接使用你 common/carousel.css 中定义的 .service-card 类 -->
+            <div class="card h-100 border-0 shadow-sm service-card">
+              
+              <!-- 图片/占位 -->
+              {% if cap.image %}
+                <img src="{{ cap.image.url }}" class="card-img-top" alt="{{ cap.title }}" style="height: 200px; object-fit: cover;">
+              {% else %}
+                <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 200px; border-bottom: 1px solid #e9ecef;">
+                  <i class="bi bi-gear text-muted" style="font-size: 4rem; opacity: 0.2;"></i>
+                </div>
+              {% endif %}
+
+              <!-- 内容 -->
+              <div class="card-body d-flex flex-column p-4">
+                <h3 class="card-title h5 fw-bold mb-2" style="color: #1A2F4C;">{{ cap.title }}</h3>
+                <p class="card-text text-muted small flex-grow-1" style="line-height: 1.6;">{{ cap.excerpt }}</p>
+                
+                <!-- 按钮 -->
+                <a href="{% url 'capability:detail' cap.slug %}" class="btn btn-outline-primary btn-sm mt-3 align-self-start" style="border-radius: 6px; font-weight: 500;">
+                  Learn More <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+          {% empty %}
+          <div class="col-12">
+            <p class="text-muted">No capabilities available in this category yet.</p>
+          </div>
+          {% endfor %}
+        </div>
+      </section>
+    {% endfor %}
+  </div>
+
+  <!-- 3. 底部 CTA (深色背景) -->
+  <section class="page-cta">
+    <div class="container py-4">
+      <div class="row align-items-center">
+        <!-- 标题 -->
+        <div class="col-12 text-center mb-4">
+          <h2 class="fw-bold mb-3" style="font-size: 2.5rem;">Ready to Start Your {{ capability.title }} Project?</h2>
+          <p class="lead mb-0 opacity-75">Upload your CAD files today and get a detailed quote within 24 hours.</p>
+        </div>      
+        <!-- 统计数据 -->
+        <div class="col-12 mb-4">
+            <div class="d-flex justify-content-center gap-5 text-center">
+              <!-- 替换为动态循环 -->
+              {% for stat in stats_order %}
+              <div>
+                <h3 class="fw-bold mb-1 text-warning" style="font-size: 2.2rem;">{{ stat.value }}{{ stat.suffix }}</h3>
+                <p class="small text-uppercase mb-0 opacity-75">{{ stat.label }}</p>
+              </div>
+              {% endfor %}
+            </div>
+        </div>
+        <!-- 按钮 -->
+        <div class="col-12 text-center">
+          <a href="#quote" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">
+            Request a Quote
+          </a>
+          <p class="mt-3 mb-0 small opacity-75"><em><i class="bi bi-lock-fill"></i> All uploads are secure and confidential. NDA available.</em></p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+{% endblock content %}

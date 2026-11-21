@@ -26,7 +26,7 @@ class Banner(models.Model):
     class Meta:
         db_table = 'home_banner'
         ordering = ['order', 'id']
-        verbose_name = '首页轮播图'
+        verbose_name = '轮播图'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -43,7 +43,7 @@ class FactSpec(models.Model):
     class Meta:
         db_table = 'home_fact_spec'
         ordering = ['order', 'id']
-        verbose_name = '首页事实表格'
+        verbose_name = '事实表格'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -55,12 +55,12 @@ class FAQ(models.Model):
     question = models.CharField(max_length=300, verbose_name="问题")
     answer = models.TextField(verbose_name="回答")
     order = models.PositiveIntegerField(default=0, verbose_name="排序")
-    is_active = models.BooleanField(default=True, verbose_name="启用")
+    is_active = models.BooleanField(default=False, verbose_name="启用")
 
     class Meta:
         db_table = 'home_faq'
         ordering = ['order', 'id']
-        verbose_name = '首页FAQ'
+        verbose_name = 'FAQ'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -89,7 +89,7 @@ class StatItem(models.Model):
     class Meta:
         db_table = 'home_stat_item'
         ordering = ['order', 'id']
-        verbose_name = '首页数据统计'
+        verbose_name = '数据统计'
         verbose_name_plural = verbose_name
 
     def __str__(self):
@@ -110,7 +110,7 @@ class OrderStep(models.Model):
     class Meta:
         db_table = 'home_order_step'
         ordering = ['order', 'id']
-        verbose_name = '首页下单步骤'
+        verbose_name = '下单步骤'
         verbose_name_plural = verbose_name
 
     def __str__(self):
