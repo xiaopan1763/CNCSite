@@ -1,0 +1,17 @@
+{% extends "admin/change_list.html" %}
+
+{% block search %}
+    {{ block.super }}
+    
+    <!-- 当前筛选条件提示 -->
+    {% if active_filters %}
+        <div style="margin-top: 10px; font-size: 13px; padding: 8px 12px; background-color: #e2e3e5; border-radius: 4px; display: inline-block;">
+            <strong>当前筛选条件：</strong>
+            {% for filter in active_filters %}
+                <span style="display: inline-block; background-color: #fff; padding: 2px 8px; margin-right: 5px; border: 1px solid #ccc; border-radius: 3px;">
+                    {{ filter }}
+                </span>
+            {% endfor %}
+        </div>
+    {% endif %}
+{% endblock %}

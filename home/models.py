@@ -134,3 +134,26 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f"{self.author} - {self.title}"
+    
+class CaseStudy(models.Model):
+    """客户案例模型"""
+    title = models.CharField(max_length=150, verbose_name="案例标题")
+    client_industry = models.CharField(max_length=100, verbose_name="客户行业", help_text="例如：Aerospace, Medical")
+    image = models.ImageField(upload_to='case_studies/', verbose_name="案例展示图")
+    
+    challenge = models.TextField(verbose_name="客户挑战", help_text="客户遇到了什么加工难题？")
+    solution = models.TextField(verbose_name="我们的解决方案", help_text="我们是如何解决的？使用了什么工艺？")
+    result = models.TextField(verbose_name="最终结果", help_text="给客户带来了什么价值？例如：公差达标、交期缩短等")
+    
+    order = models.PositiveIntegerField(default=0, verbose_name="排序")
+    is_active = models.BooleanField(default=True, verbose_name="是否展示")
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name="创建时间")
+
+    class Meta:
+        db_table = 'home_case_study'
+        ordering = ['order', '-created_at']
+        verbose_name = '客户案例'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.title

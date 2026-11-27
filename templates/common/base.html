@@ -67,10 +67,10 @@
 
   <!-- 公共 JS（放底部，避免阻塞） -->
   <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
-
+  <!-- 引入自定义导航栏交互 JS -->
+  <script src="{% static 'js/navbar.js' %}?v={% now 'U' %}"></script>
   <!-- 页面专属 JS -->
   {% block extra_js %}{% endblock %}
-
   <!-- 登录模态框 -->
   <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -100,6 +100,7 @@
       </div>
     </div>
   </div>
+  
   <!-- 登录失败后返回首页并打开登录框 -->
   {% if open_modal %}
   <script>

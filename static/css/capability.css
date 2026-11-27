@@ -139,7 +139,7 @@
               url('/static/image/capability-list-hero.jpg') center center / cover no-repeat;
 }
 
-/* ===== 6. Materials & Industries 专属背景图 ===== */
+/* ===== 6. Materials & Industries & Finishes专属背景图 ===== */
 .page-hero.bg-materials {
   background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
               url('/static/image/materials-hero.jpg') center center / cover no-repeat;
@@ -148,8 +148,22 @@
   background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
               url('/static/image/industries-hero.jpg') center center / cover no-repeat;
 }
+.page-hero.bg-finishes {
+  background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
+              url('/static/image/finishes-hero.jpg') center center / cover no-repeat;
+}
+/* ===== 7. About Us & Contact专属背景图 ===== */
+.page-hero.bg-about {
+  background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
+              url('/static/image/about-hero.jpg') center center / cover no-repeat;
+}
+.page-hero.bg-contact {
+  background: linear-gradient(135deg, rgba(26, 47, 76, 0.85) 0%, rgba(46, 92, 78, 0.8) 100%), 
+              url('/static/image/contact-hero.jpg') center center / cover no-repeat;
+}
 
-/* ===== 7. 材料页分类区块排版 ===== */
+
+/* ===== 8. 材料页分类区块排版 ===== */
 .material-section {
   margin-bottom: 5rem;
 }
@@ -170,4 +184,27 @@
   width: 6px;
   background: #2E5C4E;
   border-radius: 3px;
+}
+
+/* ===== 9. 询盘页专属 Hero (有背景图，极限压缩高度) ===== */
+.page-hero.inquiry-hero {
+  /* 背景图 + 深色遮罩 */
+  background: linear-gradient(135deg, rgba(26, 47, 76, 0.9) 0%, rgba(46, 92, 78, 0.85) 100%), 
+              url('/static/image/inquiry-hero.jpg') center center / cover no-repeat;
+  /* 【极限压缩】大幅减小上下内边距 */
+  padding: 30px 0 20px; 
+  margin-bottom: 1rem; /* 进一步减小与下方表单的距离 */
+}
+
+/* 微调标题大小和间距 */
+.page-hero.inquiry-hero h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem; 
+}
+
+/* 微调副标题段落 */
+.page-hero.inquiry-hero p {
+  margin-bottom: 0;
+  font-size: 0.95rem; 
+  opacity: 0.85;
 }

@@ -1,0 +1,93 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Design Guidelines for CNC & 3D Printing | Forest Machining{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">{{ geo_schema_json|safe }}</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main>
+  <section class="page-hero inquiry-hero">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Design Guidelines</h1>
+      <p class="lead mx-auto" style="max-width: 800px;">
+        Design parts optimized for manufacturability. Review our guidelines to reduce costs, improve quality, and shorten lead times.
+      </p>
+    </div>
+  </section>
+
+  <div class="container px-4 px-lg-5 mb-5 py-4">
+    <div class="row g-4">
+      
+      <!-- 卡片 1 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <i class="bi bi-rulers text-success mb-3" style="font-size: 2.5rem; color: #2E5C4E !important;"></i>
+          <h3 class="h4 fw-bold mb-3" style="color: #1A2F4C;">CNC Machining Tolerances</h3>
+          <p class="text-muted small">Standard tolerances follow ISO 2768 medium. We can achieve precision down to <strong>±0.005mm</strong> for critical features.</p>
+          <a href="{% url 'capability:list' %}?category_name=Manufacturing%20Services" class="btn btn-outline-primary btn-sm mt-auto align-self-start">View CNC Services</a>
+        </div>
+      </div>
+
+      <!-- 卡片 2 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <i class="bi bi-bounding-box text-success mb-3" style="font-size: 2.5rem; color: #2E5C4E !important;"></i>
+          <h3 class="h4 fw-bold mb-3" style="color: #1A2F4C;">Wall Thickness</h3>
+          <p class="text-muted small">For CNC machining, minimum wall thickness is typically <strong>0.8mm</strong> for metals and <strong>1.5mm</strong> for plastics to prevent deflection.</p>
+          <a href="{% url 'capability:detail' 'cnc-machining' %}" class="btn btn-outline-primary btn-sm mt-auto align-self-start">Read More</a>
+        </div>
+      </div>
+
+      <!-- 卡片 3 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <i class="bi bi-circle-half text-success mb-3" style="font-size: 2.5rem; color: #2E5C4E !important;"></i>
+          <h3 class="h4 fw-bold mb-3" style="color: #1A2F4C;">Surface Finish</h3>
+          <p class="text-muted small">Standard machining finish is Ra 3.2μm. We offer polishing, bead blasting, and anodizing for Ra 1.6μm and smoother.</p>
+          <a href="{% url 'finishes' %}" class="btn btn-outline-primary btn-sm mt-auto align-self-start">View Finishes</a>
+        </div>
+      </div>
+
+      <!-- 卡片 4 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <i class="bi bi-layers text-success mb-3" style="font-size: 2.5rem; color: #2E5C4E !important;"></i>
+          <h3 class="h4 fw-bold mb-3" style="color: #1A2F4C;">3D Printing Minimums</h3>
+          <p class="text-muted small">SLA/SLS resolutions can achieve layer heights of <strong>0.05mm</strong>. Minimum feature size depends on the material.</p>
+          <a href="{% url 'capability:list' %}?category_name=3D%20Printing" class="btn btn-outline-primary btn-sm mt-auto align-self-start">View 3D Printing</a>
+        </div>
+      </div>
+
+      <!-- 卡片 5 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <i class="bi bi-droplet-half text-success mb-3" style="font-size: 2.5rem; color: #2E5C4E !important;"></i>
+          <h3 class="h4 fw-bold mb-3" style="color: #1A2F4C;">Injection Molding Draft</h3>
+          <p class="text-muted small">Include a draft angle of <strong>1-2 degrees</strong> on vertical walls for smooth part ejection. Sharp corners should be filleted.</p>
+          <a href="{% url 'capability:list' %}?category_name=Molding" class="btn btn-outline-primary btn-sm mt-auto align-self-start">View Molding</a>
+        </div>
+      </div>
+      
+      <!-- 卡片 6 -->
+      <div class="col-md-6 col-lg-4">
+        <div class="card h-100 border-0 shadow-sm p-4">
+          <i class="bi bi-file-earmark-text text-success mb-3" style="font-size: 2.5rem; color: #2E5C4E !important;"></i>
+          <h3 class="h4 fw-bold mb-3" style="color: #1A2F4C;">Accepted File Formats</h3>
+          <p class="text-muted small">We accept <strong>STEP (.step, .stp)</strong> as the preferred format. IGES, X_T, and PDF (2D drawings) are also accepted.</p>
+          <a href="{% url 'inquiry:submit' %}" class="btn btn-warning btn-sm fw-bold mt-auto align-self-start" style="color: #1A2F4C;">Upload Your CAD</a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

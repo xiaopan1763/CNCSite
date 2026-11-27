@@ -1,0 +1,58 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Privacy Policy | Forest Machining{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">{{ geo_schema_json|safe }}</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+<style>
+  .legal-content h2 { font-size: 1.5rem; font-weight: 700; color: #1A2F4C; margin-top: 2rem; margin-bottom: 1rem; }
+  .legal-content p, .legal-content li { color: #6c757d; line-height: 1.8; font-size: 1rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <section class="page-hero inquiry-hero">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Privacy Policy</h1>
+      <p class="lead">Protecting your data is our priority.</p>
+    </div>
+  </section>
+
+  <div class="container px-4 px-lg-5 mb-5 py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-9 legal-content">
+        <h2>1. Information We Collect</h2>
+        <p>When you request a quote or create an account, we may collect personal information such as your name, email address, company name, phone number, and country. We also collect the technical data (CAD files) you upload for manufacturing purposes.</p>
+
+        <h2>2. How We Use Your Information</h2>
+        <ul>
+          <li>To provide accurate manufacturing quotes and process your orders.</li>
+          <li>To communicate with you regarding your projects and technical questions.</li>
+          <li>To improve our website and customer service.</li>
+        </ul>
+
+        <h2>3. Data Security (NDA)</h2>
+        <p>We take data security extremely seriously. All uploaded CAD files are encrypted during transfer and stored on secure servers. We do not share your proprietary designs with third parties. We comply with strict non-disclosure standards (NDA) and protect your intellectual property.</p>
+
+        <h2>4. Cookies</h2>
+        <p>Our website uses essential cookies to manage your login session and ensure the inquiry form functions correctly. We do not use tracking cookies for targeted advertising without your consent.</p>
+
+        <h2>5. Your GDPR Rights</h2>
+        <p>If you are located in the European Union, you have the right to access, correct, or delete your personal data. If you wish to exercise these rights, please email us at sales@forestmachining.com.</p>
+
+        <h2>6. Third-Party Services</h2>
+        <p>We may use third-party email delivery services (SMTP) to send you quote notifications. These providers are bound by strict data privacy agreements.</p>
+        
+        <p class="mt-5 text-muted"><em>If you have any questions about this Privacy Policy, please contact us.</em></p>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

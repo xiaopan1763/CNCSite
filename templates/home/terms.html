@@ -1,0 +1,54 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Terms and Conditions | Forest Machining{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">{{ geo_schema_json|safe }}</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+<style>
+  .legal-content h2 { font-size: 1.5rem; font-weight: 700; color: #1A2F4C; margin-top: 2rem; margin-bottom: 1rem; }
+  .legal-content p, .legal-content li { color: #6c757d; line-height: 1.8; font-size: 1rem; }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <section class="page-hero inquiry-hero">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Terms and Conditions</h1>
+      <p class="lead">Last updated: October 2026</p>
+    </div>
+  </section>
+
+  <div class="container px-4 px-lg-5 mb-5 py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-9 legal-content">
+        <h2>1. Agreement to Terms</h2>
+        <p>By accessing this website and placing an order with Forest Machining, you agree to be bound by these Terms and Conditions. If you do not agree, please do not use our services.</p>
+
+        <h2>2. Quotes and Orders</h2>
+        <p>All quotes provided by Forest Machining are valid for 30 days unless otherwise stated. An order is considered confirmed only upon written acceptance of the quote and receipt of any required deposit.</p>
+
+        <h2>3. Intellectual Property & NDA</h2>
+        <p>We respect your intellectual property. All CAD files, drawings, and technical specifications provided by the customer remain the property of the customer. Forest Machining will not disclose, share, or use your designs for any purpose other than fulfilling your order. We are happy to sign a Non-Disclosure Agreement (NDA) upon request.</p>
+
+        <h2>4. Quality and Tolerances</h2>
+        <p>We manufacture parts according to the tolerances specified in your CAD files and drawings (typically ISO 2768 standard unless specified). The customer is responsible for ensuring the design is suitable for its intended purpose.</p>
+
+        <h2>5. Shipping and Delivery</h2>
+        <p>Delivery times are estimates and depend on the chosen shipping method. Forest Machining is not liable for delays caused by customs clearance or third-party couriers.</p>
+
+        <h2>6. Limitation of Liability</h2>
+        <p>Forest Machining's liability for any defect or claim shall not exceed the total amount paid by the customer for the specific order in question.</p>
+        
+        <p class="mt-5 text-muted"><em>If you have any questions regarding these terms, please contact us at sales@forestmachining.com.</em></p>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -17,17 +17,303 @@
             <a class="nav-link px-2 {% if request.resolver_match.namespace == 'home' %}active{% endif %}"
                href="{% url 'home:index' %}">Home</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'capability' %}active{% endif %}"
-               href="#">Capabilities</a>
+          <li class="nav-item dropdown mega-menu">
+            <div class="d-flex align-items-center">
+              <!-- 1. 左侧文字：仅负责跳转 -->
+              <a class="nav-link px-2 {% if request.resolver_match.namespace == 'capability' %}active{% endif %}" 
+                 href="{% url 'capability:list' %}" style="padding-right: 2px;">
+                Capabilities
+              </a>
+              <!-- 2. 右侧箭头：仅负责下拉触发，并用于旋转 -->
+              <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" style="padding-left: 2px;">
+                <span class="visually-hidden">Toggle Capabilities Menu</span>
+              </a>
+            </div>
+            
+            <!-- 3. 下拉面板：加上 id 供 JS 控制 -->
+            <div class="dropdown-menu mega-menu-content" id="capabilityDropdownPanel">
+              <div class="container px-4 px-lg-5">
+                
+                <!-- 顶部总入口 -->
+                <div class="row mb-4 pb-2 border-bottom">
+                  <div class="col-12">
+                    <a href="{% url 'capability:list' %}" class="text-decoration-none d-flex align-items-center" style="color: #1A2F4C; font-size: 1.5rem; font-weight: 700;">
+                      View All Capabilities <i class="bi bi-arrow-right ms-2" style="font-size: 1.1rem; color: #2E5C4E;"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <!-- 分类平铺布局 -->
+                <div class="row row-cols-2 row-cols-md-4 row-cols-lg-7 g-3">
+                  
+                  <!-- 第 1 列 -->
+                  <div class="col mega-menu-col">
+                    <h6><a href="{% url 'capability:list' %}?category_name={{ 'Manufacturing Services'|urlencode }}" class="text-decoration-none" style="color: inherit;">Manufacturing Services</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:detail' 'cnc-machining' %}">CNC Machining</a></li>
+                      <li><a href="{% url 'capability:detail' 'cnc-turning' %}">CNC Turning</a></li>
+                      <li><a href="{% url 'capability:detail' 'cnc-milling' %}">CNC Milling</a></li>
+                      <li><a href="{% url 'capability:detail' 'cnc-drilling' %}">CNC Drilling</a></li>
+                      <li><a href="{% url 'capability:detail' '5-axis-cnc-machining' %}">5 Axis CNC Machining</a></li>
+                      <li><a href="{% url 'capability:detail' 'precision-machining' %}">Precision Machining</a></li>
+                      <li><a href="{% url 'capability:detail' 'large-part-cnc-machining' %}">Large Part CNC Machining</a></li>
+                      <li><a href="{% url 'capability:detail' 'swiss-cnc-machining' %}">Swiss CNC Machining</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- 第 2 列 -->
+                  <div class="col mega-menu-col">
+                    <h6><a href="{% url 'capability:list' %}?category_name={{ 'Fabrication'|urlencode }}" class="text-decoration-none" style="color: inherit;">Fabrication</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:detail' 'laser-cutting' %}">Laser Cutting</a></li>
+                      <li><a href="{% url 'capability:detail' 'plasma-cutting' %}">Plasma Cutting</a></li>
+                      <li><a href="{% url 'capability:detail' 'waterjet-cutting' %}">Waterjet Cutting</a></li>
+                      <li><a href="{% url 'capability:detail' 'tube-laser-cutting' %}">Tube Laser Cutting</a></li>
+                      <li><a href="{% url 'capability:detail' 'metal-bending' %}">Metal Bending</a></li>
+                      <li><a href="{% url 'capability:detail' 'welding' %}">Welding</a></li>
+                      <li><a href="{% url 'capability:detail' 'chemical-etching' %}">Chemical Etching</a></li>
+                      <li><a href="{% url 'capability:detail' 'metal-stamping' %}">Metal Stamping</a></li>
+                      <li><a href="{% url 'capability:detail' 'wire-edm' %}">Wire EDM</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- 第 3 列 -->
+                  <div class="col mega-menu-col">
+                    <h6><a href="{% url 'capability:list' %}?category_name={{ '3D Printing'|urlencode }}" class="text-decoration-none" style="color: inherit;">3D Printing</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:detail' 'sla-3d-printing' %}">Stereolithography (SLA)</a></li>
+                      <li><a href="{% url 'capability:detail' 'sls-3d-printing' %}">Selective Laser Sintering (SLS)</a></li>
+                      <li><a href="{% url 'capability:detail' 'mjf-3d-printing' %}">HP Multi Jet Fusion (MJF)</a></li>
+                      <li><a href="{% url 'capability:detail' 'fdm-3d-printing' %}">Fused Deposition Modeling (FDM)</a></li>
+                      <li><a href="{% url 'capability:detail' 'slm-3d-printing' %}">Selective Laser Melting (SLM)</a></li>
+                      <li><a href="{% url 'capability:detail' 'dlp-3d-printing' %}">Digital Light Processing (DLP)</a></li>
+                      <li><a href="{% url 'capability:detail' 'fgf-3d-printing' %}">Digital Light Processing (FGF)</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- 第 4 列 -->
+                  <div class="col mega-menu-col">
+                    <h6><a href="{% url 'capability:list' %}?category_name={{ 'Molding'|urlencode }}" class="text-decoration-none" style="color: inherit;">Molding</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:detail' 'injection-molding' %}">Injection Molding</a></li>
+                      <li><a href="{% url 'capability:detail' 'injection-mold-tooling' %}">Injection Mold Tooling</a></li>
+                      <li><a href="{% url 'capability:detail' 'overmolding' %}">Overmolding</a></li>
+                      <li><a href="{% url 'capability:detail' 'insert-molding' %}">Insert Molding</a></li>
+                      <li><a href="{% url 'capability:detail' 'low-volume-injection-molding' %}">Low Volume Injection Molding</a></li>
+                      <li><a href="{% url 'capability:detail' 'vacuum-forming' %}">Vacuum Forming</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- 第 5 列 -->
+                  <div class="col mega-menu-col">
+                   <h6><a href="{% url 'capability:list' %}?category_name={{ 'Die Casting'|urlencode }}" class="text-decoration-none" style="color: inherit;">Die Casting</a></h6>
+                   <ul>
+                     <li><a href="{% url 'capability:detail' 'die-casting' %}">Die Casting</a></li>
+                     <li><a href="{% url 'capability:detail' 'vacuum-casting' %}">Vacuum Casting</a></li>
+                     <li><a href="{% url 'capability:detail' 'aluminum-extrusion' %}">Aluminum Extrusion</a></li>
+                   </ul>
+                  </div>
+
+                  <!-- 第 6 列 -->
+                  <div class="col mega-menu-col">
+                    <h6><a href="{% url 'capability:list' %}?category_name={{ 'PCB Manufacturing'|urlencode }}" class="text-decoration-none" style="color: inherit;">PCB Manufacturing</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:detail' 'rigid-flex-pcb' %}">Rigid Flex PCB</a></li>
+                      <li><a href="{% url 'capability:detail' 'flexible-pcb' %}">Flexible PCB</a></li>
+                      <li><a href="{% url 'capability:detail' 'metal-core-pcb' %}">Metal Core PCB</a></li>
+                      <li><a href="{% url 'capability:detail' 'ceramic-pcb' %}">Ceramic PCB</a></li>
+                      <li><a href="{% url 'capability:detail' 'rf-microwave-pcb' %}">RF Microwave PCB</a></li>
+                      <li><a href="{% url 'capability:detail' 'fr4-pcb' %}">FR4 PCB</a></li>
+                    </ul>
+                  </div>
+
+                  <!-- 第 7 列 -->
+                  <div class="col mega-menu-col">
+                    <h6><a href="{% url 'capability:list' %}?category_name={{ 'Other Services'|urlencode }}" class="text-decoration-none" style="color: inherit;">Other Services</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:detail' 'rapid-prototyping' %}">Rapid Prototyping</a></li>
+                    </ul>
+                  </div>
+
+                </div>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'materials' %}active{% endif %}"
-               href="#">Materials</a>
+
+          <!-- ==================== Materials 下拉菜单 ==================== -->
+          <li class="nav-item dropdown mega-menu">
+            <div class="d-flex align-items-center">
+              <a class="nav-link px-2 {% if request.resolver_match.url_name == 'materials' %}active{% endif %}" 
+                 href="{% url 'materials' %}" style="padding-right: 2px;">
+                Materials
+              </a>
+              <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" style="padding-left: 2px;">
+                <span class="visually-hidden">Toggle Materials Menu</span>
+              </a>
+            </div>
+            
+            <div class="dropdown-menu mega-menu-content">
+              <div class="container px-4 px-lg-5">
+                <!-- 顶部总入口 -->
+                <div class="row mb-4 pb-2 border-bottom">
+                  <div class="col-12">
+                    <a href="{% url 'materials' %}" class="text-decoration-none d-flex align-items-center" style="color: #1A2F4C; font-size: 1.5rem; font-weight: 700;">
+                      View All Materials <i class="bi bi-arrow-right ms-2" style="font-size: 1.1rem; color: #2E5C4E;"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="row row-cols-1 row-cols-md-3 g-4">
+                  <!-- 金属 -->
+                  <div class="col mega-menu-col">
+                    <h6 class="single-line-h6"><a href="{% url 'capability:list' %}?material_category=metal" class="text-decoration-none" style="color: inherit;">Metals</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Aluminium'|urlencode }}">Aluminium</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Alloy Steel'|urlencode }}">Alloy Steel</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Carbon Steel'|urlencode }}">Carbon Steel</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Stainless Steel'|urlencode }}">Stainless Steel</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Steel (Mild Steel)'|urlencode }}">Steel (Mild Steel)</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Brass & Copper'|urlencode }}">Brass & Copper</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Titanium'|urlencode }}">Titanium</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Inconel'|urlencode }}">Inconel</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Magnesium Alloy'|urlencode }}">Magnesium Alloy</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Zinc'|urlencode }}">Zinc</a></li>
+                    </ul>
+                  </div>
+                  <!-- 塑料 -->
+                  <div class="col mega-menu-col">
+                    <h6 class="single-line-h6"><a href="{% url 'capability:list' %}?material_category=plastic" class="text-decoration-none" style="color: inherit;">Plastics</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'ABS'|urlencode }}">ABS</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Acrylic (PMMA)'|urlencode }}">Acrylic (PMMA)</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Engineering Plastics'|urlencode }}">Engineering Plastics</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Flexible Plastics'|urlencode }}">Flexible Plastics</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Nylon (PA)'|urlencode }}">Nylon (PA)</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'PEEK'|urlencode }}">PEEK</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'POM (Delrin)'|urlencode }}">POM (Delrin)</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'PTFE (Teflon)'|urlencode }}">PTFE (Teflon)</a></li>
+                    </ul>
+                  </div>
+                  <!-- 其他 -->
+                  <div class="col mega-menu-col">
+                    <h6 class="single-line-h6"><a href="{% url 'capability:list' %}?material_category=other" class="text-decoration-none" style="color: inherit;">Others</a></h6>
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'FR4'|urlencode }}">FR4</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Isola'|urlencode }}">Isola</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Polyimide (PI)'|urlencode }}">Polyimide (PI)</a></li>
+                      <li><a href="{% url 'capability:list' %}?material_name={{ 'Rogers'|urlencode }}">Rogers</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
-          <li class="nav-item">
-            <a class="nav-link px-2 {% if request.resolver_match.namespace == 'industries' %}active{% endif %}"
-               href="#">Industries</a>
+
+          <!-- ==================== Industries 下拉菜单 ==================== -->
+          <li class="nav-item dropdown mega-menu">
+            <div class="d-flex align-items-center">
+              <a class="nav-link px-2 {% if request.resolver_match.url_name == 'industries' %}active{% endif %}" 
+                 href="{% url 'industries' %}" style="padding-right: 2px;">
+                Industries
+              </a>
+              <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" style="padding-left: 2px;">
+                <span class="visually-hidden">Toggle Industries Menu</span>
+              </a>
+            </div>
+            
+            <div class="dropdown-menu mega-menu-content">
+              <div class="container px-4 px-lg-5">
+                <div class="row mb-4 pb-2 border-bottom">
+                  <div class="col-12">
+                    <a href="{% url 'industries' %}" class="text-decoration-none d-flex align-items-center" style="color: #1A2F4C; font-size: 1.5rem; font-weight: 700;">
+                      View All Industries <i class="bi bi-arrow-right ms-2" style="font-size: 1.1rem; color: #2E5C4E;"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="row row-cols-2 row-cols-md-4 row-cols-lg-4 g-4">
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Aerospace'|urlencode }}">Aerospace</a></li>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Automotive'|urlencode }}">Automotive</a></li>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Communication'|urlencode }}">Communication</a></li>
+                    </ul>
+                  </div>
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Consumer Goods'|urlencode }}">Consumer Goods</a></li>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Education'|urlencode }}">Education</a></li>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Electronics & Semiconductor'|urlencode }}">Electronics & Semiconductor</a></li>
+                    </ul>
+                  </div>
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Engineering'|urlencode }}">Engineering</a></li>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Machine Building'|urlencode }}">Machine Building</a></li>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Medical'|urlencode }}">Medical</a></li>
+                    </ul>
+                  </div>
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'New Energy'|urlencode }}">New Energy</a></li>
+                      <li><a href="{% url 'capability:list' %}?industry_name={{ 'Robotics & Automation'|urlencode }}">Robotics & Automation</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <!-- ==================== Finishes 下拉菜单 ==================== -->
+          <li class="nav-item dropdown mega-menu">
+            <div class="d-flex align-items-center">
+              <a class="nav-link px-2 {% if request.resolver_match.url_name == 'finishes' %}active{% endif %}" 
+                 href="{% url 'finishes' %}" style="padding-right: 2px;">
+                Finishes
+              </a>
+              <a class="nav-link dropdown-toggle" href="#" role="button" aria-expanded="false" style="padding-left: 2px;">
+                <span class="visually-hidden">Toggle Finishes Menu</span>
+              </a>
+            </div>
+            
+            <div class="dropdown-menu mega-menu-content">
+              <div class="container px-4 px-lg-5">
+                <div class="row mb-4 pb-2 border-bottom">
+                  <div class="col-12">
+                    <a href="{% url 'finishes' %}" class="text-decoration-none d-flex align-items-center" style="color: #1A2F4C; font-size: 1.5rem; font-weight: 700;">
+                      View All Surface Finishes <i class="bi bi-arrow-right ms-2" style="font-size: 1.1rem; color: #2E5C4E;"></i>
+                    </a>
+                  </div>
+                </div>
+
+                <div class="row row-cols-2 row-cols-md-4 g-4">
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Anodizing'|urlencode }}">Anodizing</a></li>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Bead Blasting'|urlencode }}">Bead Blasting</a></li>
+                    </ul>
+                  </div>
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Laser Engraving'|urlencode }}">Laser Engraving</a></li>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Passivation'|urlencode }}">Passivation</a></li>
+                    </ul>
+                  </div>
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Plating'|urlencode }}">Plating</a></li>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Polishing'|urlencode }}">Polishing</a></li>
+                    </ul>
+                  </div>
+                  <div class="col mega-menu-col">
+                    <ul>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Powder Coating'|urlencode }}">Powder Coating</a></li>
+                      <li><a href="{% url 'capability:list' %}?finish_name={{ 'Silkscreen'|urlencode }}">Silkscreen</a></li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </li>
           <li class="nav-item">
             <a class="nav-link px-2 {% if request.resolver_match.namespace == 'blog' %}active{% endif %}"
@@ -35,11 +321,11 @@
           </li>
           <li class="nav-item">
             <a class="nav-link px-2 {% if request.resolver_match.namespace == 'about' %}active{% endif %}"
-               href="#">About Us</a>
+               href="{% url 'about' %}">About Us</a>
           </li>
           <li class="nav-item">
             <a class="nav-link px-2 {% if request.resolver_match.namespace == 'contact' %}active{% endif %}"
-               href="#">Contact</a>
+               href="{% url 'contact' %}">Contact</a>
           </li>
         </ul>
         <!-- 右侧：用户菜单 -->

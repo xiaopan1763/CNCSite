@@ -1,0 +1,90 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Case Studies | Forest Machining{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">{{ geo_schema_json|safe }}</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+<style>
+  /* 针对案例卡片的微调 */
+  .case-card { transition: transform 0.3s, box-shadow 0.3s; border-radius: 12px; overflow: hidden; background: #fff;}
+  .case-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
+  .case-img { height: 220px; object-fit: cover; width: 100%; }
+  .case-content h4 { color: #1A2F4C; font-weight: 700; font-size: 1.25rem;}
+  .case-tag { background: #e8f0eb; color: #2E5C4E; font-size: 0.8rem; padding: 4px 10px; border-radius: 20px; font-weight: 600; display: inline-block; margin-bottom: 10px;}
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <section class="page-hero inquiry-hero">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Case Studies</h1>
+      <p class="lead mx-auto" style="max-width: 800px;">
+        See how we solve complex manufacturing challenges for our global clients.
+      </p>
+    </div>
+  </section>
+
+  <div class="container px-4 px-lg-5 mb-5 py-4">
+    
+    {% if case_studies %}
+      <!-- 有数据时：动态渲染案例卡片 -->
+      <div class="row g-4">
+        {% for study in case_studies %}
+        <div class="col-md-6 col-lg-4">
+          <div class="case-card shadow-sm h-100 d-flex flex-column">
+            {% if study.image %}
+              <img src="{{ study.image.url }}" class="case-img" alt="{{ study.title }}">
+            {% else %}
+              <div class="case-img bg-light d-flex align-items-center justify-content-center">
+                <i class="bi bi-image text-muted" style="font-size: 3rem;"></i>
+              </div>
+            {% endif %}
+            
+            <div class="case-content p-4 d-flex flex-column flex-grow-1">
+              <div>
+                <span class="case-tag">{{ study.client_industry }}</span>
+                <h4 class="mb-3">{{ study.title }}</h4>
+                
+                <p class="text-muted small mb-2"><strong>Challenge:</strong> {{ study.challenge|truncatewords:15 }}</p>
+                <p class="text-muted small mb-4"><strong>Solution:</strong> {{ study.solution|truncatewords:15 }}</p>
+              </div>
+              
+              <div class="mt-auto">
+                <!-- 目前没有详情页，可以暂时跳转到询盘页或隐藏按钮 -->
+                <a href="{% url 'inquiry:submit' %}" class="btn btn-outline-primary btn-sm w-100" style="border-radius: 6px;">
+                  Discuss a Similar Project <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+      
+    {% else %}
+      <!-- 没有数据时：展示原有的静态兜底 -->
+      <div class="row justify-content-center text-center py-5">
+        <div class="col-md-8">
+          <i class="bi bi-briefcase text-muted mb-4" style="font-size: 5rem; opacity: 0.3;"></i>
+          <h2 class="fw-bold" style="color: #1A2F4C;">Case Studies Coming Soon</h2>
+          <p class="text-muted lead mt-3 mb-5">
+            Our engineering team is currently documenting our latest successful projects. Please check back soon to see how we've helped companies in Aerospace, Medical, and Automotive manufacturing.
+          </p>
+          <a href="{% url 'inquiry:submit' %}" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">
+            Start Your Project Today
+          </a>
+        </div>
+      </div>
+    {% endif %}
+
+  </div>
+</main>
+{% endblock %}

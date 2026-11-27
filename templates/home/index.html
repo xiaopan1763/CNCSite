@@ -379,9 +379,11 @@
           <!-- 右侧：CTA 按钮 -->
           <div class="col-md-6 col-lg-7">
             <div class="text-center text-md-start">
-              <a href="#" class="btn btn-primary btn-lg cta-btn">
-                Request a Quote
-              </a>
+              {% if user.is_authenticated %}
+              <a href="{% url 'inquiry:submit' %}" class="btn btn-primary btn-lg cta-btn">Request a Quote</a>
+              {% else %}
+              <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-primary btn-lg cta-btn">Log in to Request Quote</a>
+              {% endif %}
               <p class="cta-note mt-3 mb-0"><em>All uploads are secure and confidential.</em></p>
             </div>
           </div>

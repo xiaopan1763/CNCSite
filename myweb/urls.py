@@ -22,6 +22,7 @@ from django.conf.urls.static import static
 from django.contrib.sitemaps.views import sitemap
 from .sitemaps import StaticViewSitemap
 from capability import views as capability_views # 引入视图
+from home.views import AboutView, ContactView, DesignGuidelinesView, CaseStudiesView, TermsView, PrivacyView # 引入home应用的视图
 
 sitemaps = {
     'static': StaticViewSitemap,
@@ -35,6 +36,15 @@ urlpatterns = [
     # 直接在根目录暴露 materials 和 industries
     path('materials/', capability_views.MaterialListView.as_view(), name='materials'),
     path('industries/', capability_views.IndustryListView.as_view(), name='industries'),
+    path('finishes/', capability_views.SurfaceFinishListView.as_view(), name='finishes'),
+    # 【新增】关于我们与联系我们
+    path('about/', AboutView.as_view(), name='about'),
+    path('contact/', ContactView.as_view(), name='contact'),
+    path('inquiry/', include('inquiry.urls')),
+    path('design-guidelines/', DesignGuidelinesView.as_view(), name='design_guidelines'),
+    path('case-studies/', CaseStudiesView.as_view(), name='case_studies'),
+    path('terms/', TermsView.as_view(), name='terms'),
+    path('privacy/', PrivacyView.as_view(), name='privacy'),
     path('ckeditor/', include('django_ckeditor_5.urls')),  # 挂载CKEditor5相关URL
     
     # 新增三个GEO优化URL

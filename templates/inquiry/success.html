@@ -1,0 +1,63 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Inquiry Received | Forest Machining{% endblock %}
+
+{% block extra_css %}
+<!-- 引入公共样式，恢复 Hero 和整体质感 -->
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+<style>
+  /* 让成功页的卡片高度更自然 */
+  .success-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- 复用询盘页的紧凑型 Hero 页头 -->
+  <section class="page-hero inquiry-hero">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Inquiry Received</h1>
+      <p class="lead mx-auto" style="max-width: 800px;">
+        Thank you for choosing Forest Machining.
+      </p>
+    </div>
+  </section>
+
+  <div class="container px-4 px-lg-5 mb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="success-card p-5 text-center">
+          
+          <!-- 绿色的成功打勾图标 -->
+          <i class="bi bi-check-circle-fill text-success" style="font-size: 5rem; line-height: 1;"></i>
+          
+          <h2 class="fw-bold mt-4 mb-3" style="color: #1A2F4C; font-size: 2rem;">
+            Inquiry Successfully Submitted
+          </h2>
+          
+          <p class="text-muted lead mb-4" style="font-size: 1.1rem; line-height: 1.6;">
+            Our engineering team has received your project details.<br>
+            We will review your requirements and get back to you within <strong>24 hours</strong>.
+          </p>
+          
+          <div class="d-flex justify-content-center gap-3 mt-4">
+            <a href="{% url 'home:index' %}" class="btn btn-outline-secondary btn-lg px-4" style="border-radius: 8px;">
+              Return to Homepage
+            </a>
+            <!-- 如果你想，还可以加一个按钮让用户继续逛材料库 -->
+            <a href="{% url 'materials' %}" class="btn btn-warning btn-lg px-4 fw-bold" style="border-radius: 8px; color: #1A2F4C;">
+              Explore Materials
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

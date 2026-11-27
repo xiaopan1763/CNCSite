@@ -1,0 +1,142 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Request a Quote - Get a Custom CNC Machining Quote{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">
+  {{ geo_schema_json|safe }}
+</script>
+{% endblock %}
+
+{% block extra_css %}
+<!-- 【修复 1】引入公共的 capability.css，恢复首屏深色背景和排版 -->
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- Hero 区域 -->
+  <section class="page-hero inquiry-hero">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Request a Manufacturing Quote</h1>
+      <p class="lead mx-auto" style="max-width: 800px; font-size: 1.1rem;">
+        Tell us about your project. Our engineering team will review your requirements and provide a detailed, no-obligation quote within 24 hours.
+      </p>
+    </div>
+  </section>
+
+  <!-- 【新增】右上角的 Toast 错误提示框 -->
+  <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100; margin-top: 60px;">
+    <div id="validationToast" class="toast align-items-center text-bg-danger border-0 shadow" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="d-flex">
+        <div class="toast-body">
+          <i class="bi bi-exclamation-triangle-fill me-2"></i> Please fill in all required fields marked with *.
+        </div>
+        <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+    </div>
+  </div>
+
+  <div class="container px-4 px-lg-5 mb-5">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="card border-0 shadow-sm p-4 p-md-5" style="border-radius: 12px; background: #fff;">
+          
+          {% if not user.is_authenticated %}
+            <div class="text-center py-5">
+              <i class="bi bi-shield-lock text-warning" style="font-size: 4rem;"></i>
+              <h2 class="h4 fw-bold mt-3 mb-3">Log in to Submit Your RFQ</h2>
+              <p class="text-muted mb-4">To ensure the security of your intellectual property and streamline communication, please log in to your account to upload CAD files.</p>
+              <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Log In / Register
+              </button>
+            </div>
+          {% else %}
+            <!-- 保留 novalidate 让浏览器不弹默认英文气泡，完全由我们的 JS 和 Django 接管 -->
+            <form method="post" enctype="multipart/form-data" novalidate id="quote-form" name="quoteForm">
+              {% csrf_token %}
+              
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="{{ form.company.id_for_label }}" class="form-label fw-bold">Company Name</label>
+                  {{ form.company }}
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label for="{{ form.service_type.id_for_label }}" class="form-label fw-bold">Required Service <span class="text-danger">*</span></label>
+                  {{ form.service_type }}
+                  <!-- 【修复 2】显示 Django 后端验证失败时的错误信息 -->
+                  {% if form.service_type.errors %}
+                    <div class="text-danger small mt-1">{{ form.service_type.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-md-6 mb-4">
+                  <label for="{{ form.quantity.id_for_label }}" class="form-label fw-bold">Estimated Quantity</label>
+                  {{ form.quantity }}
+                </div>
+                <div class="col-md-6 mb-4">
+                  <label for="{{ form.cad_file.id_for_label }}" class="form-label fw-bold">Upload 3D CAD File (Max 50MB)</label>
+                  {{ form.cad_file }}
+                  <div class="form-text small">Accepted formats: STEP, STP, IGES, PDF, ZIP</div>
+                  {% if form.cad_file.errors %}
+                    <div class="text-danger small mt-1">{{ form.cad_file.errors.0 }}</div>
+                  {% endif %}
+                </div>
+              </div>
+
+              <div class="mb-4">
+                <label for="{{ form.message.id_for_label }}" class="form-label fw-bold">Project Description & Requirements <span class="text-danger">*</span></label>
+                {{ form.message }}
+                {% if form.message.errors %}
+                  <div class="text-danger small mt-1">{{ form.message.errors.0 }}</div>
+                {% endif %}
+              </div>
+
+              <div class="d-grid mt-2">
+                <button type="submit" class="btn btn-warning btn-lg fw-bold" style="padding: 14px; color: #1A2F4C;">
+                  Submit Request for Quote <i class="bi bi-send ms-2"></i>
+                </button>
+              </div>
+              <p class="text-center text-muted small mt-3 mb-0">
+                <i class="bi bi-shield-lock-fill"></i> All uploads are secure and confidential. NDA available upon request.
+              </p>
+            </form>
+          {% endif %}
+
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
+
+{% block extra_js %}
+<!-- 【新增】前端表单验证拦截脚本 -->
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('quote-form');
+    if (!form) return; // 如果用户未登录，页面上没有表单，直接跳过
+
+    form.addEventListener('submit', function(event) {
+      // 检查 HTML5 原生的必填项 (必填项在 forms.py 里已经设置了 required 属性)
+      if (!form.checkValidity()) {
+        event.preventDefault(); // 阻止表单提交
+        event.stopPropagation();
+
+        // 弹出右上角的 Toast 提示
+        const toastEl = document.getElementById('validationToast');
+        const toast = new bootstrap.Toast(toastEl, { delay: 3000 });
+        toast.show();
+
+        // 给表单加上 Bootstrap 的验证样式（让空的 input 框变红）
+        form.classList.add('was-validated');
+      }
+    }, false);
+  });
+</script>
+{% endblock %}

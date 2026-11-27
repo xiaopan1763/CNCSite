@@ -29,6 +29,16 @@
     </div>
   </section>
 
+  <!-- 【新增】当前筛选提示条 -->
+  {% if active_filter %}
+  <div class="container px-4 px-lg-5 mt-4 mb-0">
+    <div class="alert alert-info d-flex justify-content-between align-items-center shadow-sm" style="border-radius: 10px;">
+      <span><i class="bi bi-funnel-fill me-2"></i> Showing capabilities related to <strong>{{ active_filter }}</strong></span>
+      <a href="{{ clear_filter_url }}" class="btn btn-sm btn-outline-dark">View All Capabilities</a>
+    </div>
+  </div>
+  {% endif %}
+
   <!-- 2. 分类及工艺卡片区域 -->
   <div class="container px-4 px-lg-5">
     {% for category in categories %}
@@ -88,7 +98,7 @@
       <div class="row align-items-center">
         <!-- 标题 -->
         <div class="col-12 text-center mb-4">
-          <h2 class="fw-bold mb-3" style="font-size: 2.5rem;">Ready to Start Your {{ capability.title }} Project?</h2>
+          <h2 class="fw-bold mb-3" style="font-size: 2.5rem;">Ready to Start Your Project?</h2>
           <p class="lead mb-0 opacity-75">Upload your CAD files today and get a detailed quote within 24 hours.</p>
         </div>      
         <!-- 统计数据 -->
@@ -105,9 +115,11 @@
         </div>
         <!-- 按钮 -->
         <div class="col-12 text-center">
-          <a href="#quote" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">
-            Request a Quote
-          </a>
+          {% if user.is_authenticated %}
+          <a href="{% url 'inquiry:submit' %}" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">Request a Quote</a>
+          {% else %}
+          <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">Log in to Request Quote</a>
+          {% endif %}
           <p class="mt-3 mb-0 small opacity-75"><em><i class="bi bi-lock-fill"></i> All uploads are secure and confidential. NDA available.</em></p>
         </div>
       </div>
@@ -115,3 +127,4 @@
   </section>
 </main>
 {% endblock content %}
+

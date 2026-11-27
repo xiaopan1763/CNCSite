@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; line-height: 1.6; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eee; border-radius: 8px; }
+    .header { text-align: center; padding-bottom: 20px; border-bottom: 2px solid #2E5C4E; }
+    .header img { max-height: 60px; }
+    .content { padding: 20px 0; }
+    .footer { font-size: 12px; color: #888; text-align: center; margin-top: 30px; border-top: 1px solid #eee; padding-top: 10px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <!-- 必须使用绝对路径，否则邮件里图片无法显示 -->
+      <img src="https://guanhaoauto.com/static/image/logo.jpeg" alt="Forest Machining">
+    </div>
+    <div class="content">
+      <h2 style="color: #1A2F4C;">Dear {{ inquiry.name }},</h2>
+      <p>Thank you for contacting <strong>Forest Machining</strong>.</p>
+      <p>We have successfully received your Request for Quote (RFQ) regarding <strong>{{ inquiry.service_type }}</strong>.</p>
+      <p>Our engineering and sales team is currently reviewing your requirements. We will provide a detailed quotation and DFM feedback within <strong>24 hours</strong>.</p>
+      {% if inquiry.cad_file %}
+      <p style="background: #f0fdf4; padding: 10px; border-left: 4px solid #2E5C4E;">
+        <i>Your CAD file has been received securely. Our engineers are analyzing it.</i>
+      </p>
+      {% endif %}
+      <p>If you have any additional drawings or urgent updates, please reply directly to this email.</p>
+      <br>
+      <p>Best regards,</p>
+      <p><strong>The Forest Machining Team</strong><br>
+      Email: <a href="mailto:bonnie@guanhaoauto.com">bonnie@guanhaoauto.com</a><br>
+      Website: <a href="https://guanhaoauto.com" style="color: #2E5C4E;">https://guanhaoauto.com</a></p>
+    </div>
+    <div class="footer">
+      All uploads are secure and confidential. NDA available upon request.
+    </div>
+  </div>
+</body>
+</html>

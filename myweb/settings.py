@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django_ckeditor_5',
     'home',
     'django.contrib.sitemaps',
+    'inquiry',
 ]
 
 MIDDLEWARE = [
@@ -201,3 +202,18 @@ CKEDITOR_5_CONFIGS = {
         'language': 'zh-cn',
     },
 }
+
+# ============================================================
+# 邮件发送配置 (SMTP)
+# ============================================================
+# 【测试阶段】使用控制台输出：
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+# 【正式阶段】使用 Namecheap 企业邮箱 (测试完请取消下面这行的注释)
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mail.privateemail.com'  # Namecheap 的 SMTP 服务器
+EMAIL_PORT = 465                      
+EMAIL_USE_SSL = True                  
+EMAIL_HOST_USER = 'bonnie@guanhaoauto.com'     # 你的企业邮箱
+EMAIL_HOST_PASSWORD = 'WODEguanhaomima00'      # 邮箱登录密码
+DEFAULT_FROM_EMAIL = f"Forest Machining <{EMAIL_HOST_USER}>"

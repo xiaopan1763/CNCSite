@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <style>
+    body { font-family: Arial, sans-serif; color: #333; }
+    .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+    h2 { color: #1A2F4C; border-bottom: 2px solid #2E5C4E; padding-bottom: 10px; }
+    table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+    td { padding: 10px; border-bottom: 1px solid #eee; }
+    .label { font-weight: bold; width: 30%; color: #555; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>New Quote Request Received</h2>
+    <table>
+      <tr><td class="label">Name:</td><td>{{ inquiry.name }}</td></tr>
+      <tr><td class="label">Email:</td><td><a href="mailto:{{ inquiry.email }}">{{ inquiry.email }}</a></td></tr>
+      <tr><td class="label">Phone:</td><td>{{ inquiry.phone|default:"N/A" }}</td></tr>
+      <tr><td class="label">Company:</td><td>{{ inquiry.company|default:"N/A" }}</td></tr>
+      <tr><td class="label">Country:</td><td>{{ inquiry.country|default:"N/A" }}</td></tr>
+      <tr><td class="label">Service:</td><td><strong>{{ inquiry.service_type }}</strong></td></tr>
+      <tr><td class="label">Quantity:</td><td>{{ inquiry.quantity|default:"N/A" }}</td></tr>
+    </table>
+    
+    <h3 style="color: #1A2F4C; margin-top: 30px;">Project Description:</h3>
+    <div style="background: #f9f9f9; padding: 15px; border-radius: 5px; border: 1px solid #eee;">
+      {{ inquiry.message|linebreaksbr }}
+    </div>
+    
+    {% if inquiry.cad_file %}
+    <p style="margin-top: 20px;">
+      <strong>Attached File:</strong> 
+      <!-- 这里同样必须使用绝对路径，防止点击后跳到 localhost -->
+      <a href="https://guanhaoauto.com{{ inquiry.cad_file.url }}" style="display:inline-block; padding: 10px 20px; background-color: #2E5C4E; color: white; text-decoration: none; border-radius: 5px; margin-top: 10px;">Download CAD File</a>
+    </p>
+    {% endif %}
+  </div>
+</body>
+</html>

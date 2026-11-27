@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Banner, FactSpec, FAQ, StatItem, OrderStep, Testimonial
+from .models import Banner, FactSpec, FAQ, StatItem, OrderStep, Testimonial, CaseStudy
 
 @admin.register(Banner)
 class BannerAdmin(admin.ModelAdmin):
@@ -58,3 +58,24 @@ class TestimonialAdmin(admin.ModelAdmin):
     list_editable = ('rating', 'order', 'is_active')
     search_fields = ('author', 'title', 'content')
     list_filter = ('rating', 'is_active')
+
+@admin.register(CaseStudy)
+class CaseStudyAdmin(admin.ModelAdmin):
+    list_display = ('title', 'client_industry', 'order', 'is_active')
+    list_editable = ('order', 'is_active')
+    list_filter = ('is_active', 'client_industry')
+    search_fields = ('title', 'challenge', 'solution')
+    
+    # 按照区块划分编辑页面，更清晰
+    fieldsets = (
+        ('基本信息', {
+            'fields': ('title', 'client_industry', 'image')
+        }),
+        ('案例详情', {
+            'fields': ('challenge', 'solution', 'result'),
+            'description': '请详细描述客户的痛点和我们提供的价值，这将直接显示在前端页面上。'
+        }),
+        ('状态与排序', {
+            'fields': ('order', 'is_active')
+        }),
+    )

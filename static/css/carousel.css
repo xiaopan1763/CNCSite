@@ -686,3 +686,114 @@ body {
     font-size: 0.8rem;
   }
 }
+
+/* ===== Mega Menu 样式 ===== */
+@media (min-width: 992px) {
+  /* 让下拉容器占满全屏宽度，但内容限制在 container 内 */
+  .mega-menu {
+    position: static; /* 关键：让子菜单相对于 navbar 定位，而不是按钮 */
+  }
+  .mega-menu-content {
+  width: 100%;
+  left: 0;
+  right: 0;
+  padding: 2.5rem 0; /* 增加上下留白，让面板更大起 */
+  margin-top: 0;
+  border-radius: 0 0 12px 12px;
+  border: none;
+  box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+  display: none; 
+  }
+  /* 标题区样式 */
+  .mega-menu-content .border-bottom {
+    border-color: #e9ecef !important;
+  }
+  /* 强制 6 列平分，消除宽窄不一 */
+  .mega-menu-content .row-cols-lg-7 > * {
+    flex: 0 0 auto;
+    width: 14.28571428%; /* 100% / 7 */
+    padding-right: calc(var(--bs-gutter-x) * .5);
+    padding-left: calc(var(--bs-gutter-x) * .5);
+    margin-top: 0;
+  }
+  /* 调整多列的排版 */
+  .mega-menu-content .row {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  /* 让每个分类区域严格左对齐，高度自适应 */
+  .mega-menu-col {
+    margin-bottom: 0;
+    text-align: left; 
+  }
+  /* 标题样式（包含链接） */
+  .mega-menu-col h6 {
+    margin-bottom: 1rem;
+    border-bottom: 2px solid #2E5C4E;
+    padding-bottom: 0.5rem;
+    width: 100%; /* 让下划线横跨整个列宽，视觉更整齐 */
+    /* 【核心修改】强制统一高度，并让文字在底部对齐 */
+    min-height: 3.2rem; 
+    display: flex;
+    align-items: flex-end; 
+  }
+  .mega-menu-col h6 a {
+    color: #1A2F4C;
+    font-weight: 700;
+    font-size: 0.9rem; /* 稍微缩小字号，防止两行撑爆 */
+    transition: color 0.2s;
+    line-height: 1.3;
+    display: block;
+    width: 100%;
+  }
+  
+  .mega-menu-col h6 a:hover {
+    color: #2E5C4E;
+  }
+  /* 列表样式 */
+  .mega-menu-col ul {
+    list-style: none;
+    padding-left: 0;
+    margin-bottom: 0;
+  }
+  .mega-menu-col ul li {
+    margin-bottom: 0.6rem;
+  }  
+  .mega-menu-col ul li a {
+    color: #6c757d;
+    text-decoration: none;
+    font-size: 0.85rem;
+    line-height: 1.4;
+    transition: color 0.2s ease, padding-left 0.2s ease;
+    display: block;
+    /* 确保长单词不会撑破列宽 */
+    word-wrap: break-word; 
+  }  
+  .mega-menu-col ul li a:hover {
+    color: #2E5C4E;
+    padding-left: 4px;
+  }
+  /* 专门针对只有单行标题的菜单（如 Materials/Industries/Finishes） */
+  .mega-menu-col .single-line-h6 {
+    min-height: auto !important; /* 取消强制高度 */
+    align-items: flex-start !important; /* 靠上对齐 */
+    margin-bottom: 1.2rem !important; /* 稍微增加底边距，拉开与列表的距离 */
+  }
+
+  .mega-menu-col .single-line-h6 a {
+    font-size: 1.1rem !important; /* 字体放大到 1.1rem */
+    font-weight: 800 !important; /* 稍微加粗一点，更醒目 */
+  }
+}
+
+/* ===== 箭头旋转动画 (通用覆盖版) ===== */
+.mega-menu .dropdown-toggle::after {
+  transition: transform 0.3s ease !important;
+  vertical-align: middle !important;
+  display: inline-block !important; 
+}
+
+/* 当加上 rotate-arrow 类时，强制旋转 180 度 */
+.mega-menu .dropdown-toggle.rotate-arrow::after {
+  transform: rotate(180deg) !important;
+}

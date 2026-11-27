@@ -102,9 +102,14 @@ class CapabilityAdmin(admin.ModelAdmin):
     # 允许在列表页直接编辑 show_on_home 和 order
     list_editable = ('show_on_home', 'order')
 
-    # 右侧过滤器：按分类和行业筛选
-    # 【修改】加入了 'surface_finishes' 筛选
-    list_filter = (CategoryCountFilter, 'industries', 'show_on_home', 'surface_finishes')
+    # 右侧过滤器：按分类、行业、材料、表面处理筛选
+    # 使用 RelatedOnlyFieldListFilter 保证只显示当前有工艺关联的选项，避免列表过长
+    list_filter = (
+        CategoryCountFilter, 
+        'industries', 
+        'materials',  # <--- 新增：材料过滤
+        'surface_finishes'
+    )
 
     # 顶部搜索框：搜索标题、摘要、描述
     search_fields = ('title', 'excerpt', 'description')
@@ -125,6 +130,46 @@ class CapabilityAdmin(admin.ModelAdmin):
         if 'hero_features' in form.base_fields:
             form.base_fields['hero_features'].widget = forms.Textarea(attrs={'rows': 4, 'class': 'vLargeTextField'})
         return form
+    
+    def changelist_view(self, request, extra_context=None):
+        extra_context = extra_context or {}
+        active_filters = []
+        
+        # 获取 URL 里的查询参数
+        category_id = request.GET.get('category')
+        industry_id = request.GET.get('industries__id__exact')
+        material_id = request.GET.get('materials__id__exact')
+        surface_id = request.GET.get('surface_finishes__id__exact')
+        
+        # 动态拼装中文提示
+        if category_id:
+            try:
+                from .models import Category
+                active_filters.append(f"分类: {Category.objects.get(id=category_id).name}")
+            except Category.DoesNotExist: pass
+            
+        if industry_id:
+            try:
+                from .models import Industry
+                active_filters.append(f"行业: {Industry.objects.get(id=industry_id).name}")
+            except Industry.DoesNotExist: pass
+            
+        if material_id:
+            try:
+                from .models import Material
+                active_filters.append(f"材料: {Material.objects.get(id=material_id).name}")
+            except Material.DoesNotExist: pass
+            
+        if surface_id:
+            try:
+                from .models import SurfaceFinish
+                active_filters.append(f"表面处理: {SurfaceFinish.objects.get(id=surface_id).name}")
+            except SurfaceFinish.DoesNotExist: pass
+
+        # 将拼装好的字符串列表传入上下文
+        extra_context['active_filters'] = active_filters
+
+        return super().changelist_view(request, extra_context=extra_context)
 
 
 # ============================================================

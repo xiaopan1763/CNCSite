@@ -1,0 +1,80 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}Contact Us | Forest Machining{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">{{ geo_schema_json|safe }}</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main>
+  <section class="page-hero bg-contact">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>Contact Us</h1>
+      <p class="lead mx-auto" style="max-width: 800px;">
+        Have a question or need a quote? Our engineering team is ready to assist you.
+      </p>
+    </div>
+  </section> 
+
+  <div class="container px-4 px-lg-5 mb-5">
+    <div class="row g-5">
+      <!-- 左侧联系信息 -->
+      <div class="col-lg-5">
+        <div class="bg-light p-4 p-md-5 rounded h-100 shadow-sm">
+          <h3 class="fw-bold mb-4" style="color: #1A2F4C;">Get in Touch</h3>
+          
+          <div class="d-flex mb-4">
+            <i class="bi bi-envelope-fill text-success me-3" style="font-size: 1.5rem; color: #2E5C4E !important;"></i>
+            <div>
+              <h6 class="fw-bold mb-1">Email Us</h6>
+              <p class="text-muted mb-0">sales@forestmachining.com</p>
+            </div>
+          </div>
+          
+          <div class="d-flex mb-4">
+            <i class="bi bi-telephone-fill text-success me-3" style="font-size: 1.5rem; color: #2E5C4E !important;"></i>
+            <div>
+              <h6 class="fw-bold mb-1">Call Us</h6>
+              <p class="text-muted mb-0">+86 123 4567 8901</p>
+            </div>
+          </div>
+
+          <div class="d-flex mb-4">
+            <i class="bi bi-geo-alt-fill text-success me-3" style="font-size: 1.5rem; color: #2E5C4E !important;"></i>
+            <div>
+              <h6 class="fw-bold mb-1">Visit Our Factory</h6>
+              <p class="text-muted mb-0">Your Factory Address, Dongguan, Guangdong, China</p>
+            </div>
+          </div>
+
+          <hr class="my-4">
+          
+          <h5 class="fw-bold mb-3" style="color: #1A2F4C;">Need a Quote?</h5>
+          <p class="text-muted small mb-3">For the fastest response, please upload your CAD files through our secure inquiry system.</p>
+          {% if user.is_authenticated %}
+          <a href="{% url 'inquiry:submit' %}" class="btn btn-warning btn-lg px-4 py-2 fw-bold" style="border-radius: 8px; color: #1A2F4C;">Request a Quote</a>
+          {% else %}
+          <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-warning btn-lg px-4 py-2 fw-bold" style="border-radius: 8px; color: #1A2F4C;">Log in to Request Quote</a>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- 右侧地图 (占位) -->
+      <div class="col-lg-7">
+        <div class="h-100 rounded overflow-hidden shadow-sm" style="min-height: 400px; background: #e9ecef;">
+          <!-- 上线后替换为 Google Maps iframe -->
+          <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d117522.34898972421!2d113.6824419!3d23.0206735!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3403f401c0f97fb9%3A0x8b7b8b!2sDongguan%2C%20Guangdong%2C%20China!5e0!3m2!1sen!2sus!4v1610000000000!5m2!1sen!2sus" width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,109 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block page_title %}About Us | Forest Machining{% endblock %}
+{% block meta_description %}{{ meta_description }}{% endblock %}
+{% block canonical_url %}{{ canonical_url }}{% endblock %}
+
+{% block extra_json_ld %}
+<script type="application/ld+json">{{ geo_schema_json|safe }}</script>
+{% endblock %}
+
+{% block extra_css %}
+<link href="{% static 'css/capability.css' %}?v={% now 'U' %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<main>
+  <!-- Hero 区域 -->
+  <section class="page-hero bg-about ">
+    <div class="container px-4 px-lg-5 text-center">
+      <h1>About Forest Machining</h1>
+      <p class="lead mx-auto" style="max-width: 800px;">
+        Your trusted partner for precision manufacturing. We bridge the gap between innovative design and high-quality production.
+      </p>
+    </div>
+  </section> 
+
+  <!-- 公司简介 -->
+  <section class="py-5 bg-white">
+    <div class="container px-4 px-lg-5">
+      <div class="row align-items-center g-5">
+        <div class="col-lg-6">
+          <img src="{% static 'image/factory-intro.jpg' %}" alt="Forest Machining Factory" class="img-fluid rounded shadow-lg">
+        </div>
+        <div class="col-lg-6">
+          <h2 class="fw-bold mb-3" style="color: #1A2F4C; font-size: 2.2rem;">Precision Engineered.<br>Globally Delivered.</h2>
+          <div style="width: 60px; height: 4px; background: #2E5C4E; margin-bottom: 1.5rem;"></div>
+          <p class="text-muted" style="line-height: 1.8;">
+            Founded in Dongguan, China, Forest Machining has grown into a leading provider of on-demand manufacturing services. We combine advanced CNC machining, injection molding, and 3D printing capabilities to serve industries ranging from aerospace to medical devices.
+          </p>
+          <p class="text-muted" style="line-height: 1.8;">
+            Our ISO 9001 certified facility is equipped with multi-axis CNC machines and a dedicated quality assurance team. We believe in transparent communication, fast lead times, and building long-term partnerships with our clients worldwide.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 核心数据 -->
+  <section class="py-5" style="background: #f8f9fa;">
+    <div class="container px-4 px-lg-5 text-center">
+      <h2 class="fw-bold mb-5" style="color: #1A2F4C;">Our Track Record</h2>
+      <div class="row g-4 justify-content-center">
+        {% for stat in stats_partner %}
+        <div class="col-6 col-md-3">
+          <div class="p-4 bg-white rounded shadow-sm">
+            <div class="stat-number" style="color: #2E5C4E; font-size: 2.5rem;">{{ stat.value }}{{ stat.suffix }}</div>
+            <div class="stat-label text-uppercase fw-bold text-muted mt-2" style="font-size: 0.85rem;">{{ stat.label }}</div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+  </section>
+
+  <!-- 为什么选择我们 -->
+  <section class="py-5 bg-white">
+    <div class="container px-4 px-lg-5">
+      <div class="row mb-5 text-center">
+        <div class="col-12">
+          <h2 class="fw-bold" style="color: #1A2F4C;">Why Choose Forest Machining?</h2>
+        </div>
+      </div>
+      <div class="row g-4">
+        <div class="col-md-4 text-center">
+          <i class="bi bi-shield-check" style="font-size: 3rem; color: #2E5C4E;"></i>
+          <h4 class="fw-bold mt-3" style="color: #1A2F4C;">Quality Guaranteed</h4>
+          <p class="text-muted small">100% inspection on critical dimensions. Full material certifications and traceability provided.</p>
+        </div>
+        <div class="col-md-4 text-center">
+          <i class="bi bi-lightning-charge" style="font-size: 3rem; color: #2E5C4E;"></i>
+          <h4 class="fw-bold mt-3" style="color: #1A2F4C;">Fast Turnaround</h4>
+          <p class="text-muted small">Rapid prototyping in as fast as 24 hours. Production orders delivered on time, every time.</p>
+        </div>
+        <div class="col-md-4 text-center">
+          <i class="bi bi-headset" style="font-size: 3rem; color: #2E5C4E;"></i>
+          <h4 class="fw-bold mt-3" style="color: #1A2F4C;">Dedicated Support</h4>
+          <p class="text-muted small">English-speaking engineers ready to provide DFM feedback and support your projects 24/5.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 底部 CTA -->
+  <section class="page-cta mt-5">
+    <div class="container text-center">
+      <h2>Ready to Work With Us?</h2>
+      <p class="lead mb-4 opacity-75">Upload your CAD files and get a detailed quote within 24 hours.</p>
+      <!-- 按钮 -->
+      {% if user.is_authenticated %}
+      <a href="{% url 'inquiry:submit' %}" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">Request a Quote</a>
+      {% else %}
+      <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-warning btn-lg px-5 py-3 fw-bold" style="border-radius: 8px; color: #1A2F4C;">Log in to Request Quote</a>
+      {% endif %}
+      <p class="mt-3 mb-0 small opacity-75"><em><i class="bi bi-lock-fill"></i> All uploads are secure and confidential. NDA available.</em></p>
+    </div>
+  </section>
+</main>
+{% endblock %}
